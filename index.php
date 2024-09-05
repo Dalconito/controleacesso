@@ -13,11 +13,24 @@
         <button type="Mostrar QrCode"></button>
     </form>    
 
-<?php 
+<?php
     require_once "./qrcode/geradorQrcode.php";
     $idQrCode = isset($_POST['idQrCode']) ? $_POST['idQrCode'] : null;
     $resultQuery = isset($_POST['idQrCode'])  ? Query($idQrCode) : null;
-    echo $resultQuery['qrcode'];
+    if($resultQuery != null)
+    {
+        $testinho = $resultQuery['qrcode'];
+        echo $resultQuery['qrcode'];
+        ob_start();
+        QRcode::png($testinho, null, QR_ECLEVEL_L, 10);
+        $imageString = base64_encode(ob_get_contents());
+        ob_end_clean();
+        
+    }
+
 ?>
+<div>
+    <img src="data:image/png;base64,<?= $imageString ?>" alt="QR Code">
+</div>
 </body>
 </html>
