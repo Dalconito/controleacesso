@@ -27,11 +27,11 @@
             <button type="submit" disabled class="validar" id="btnValidar">Validando</button>
     </div>
     
-
 <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
 <script>
     var linkQr = document.getElementById("linkqrCode")
     var btnValidar =document.getElementById("btnValidar")
+
     function onScanSuccess(decodedText, decodedResult) {
         //linkQr.setAttribute("href", decodedText);
         document.getElementById("qrCodeParagh").style.display = "block";
@@ -48,8 +48,8 @@
         const html5QrCode = new Html5Qrcode("reader");
         html5QrCode.start(cameraId,
                             {fps: 30, qrbox: 250},
-                            onScanSuccess, onScanError
-                            );
+                            onScanSuccess, onScanError);
+
     }).catch(err => {console.error("Erro ao obter câmeras: ", err);});
 
     function enviarPost(decodedText)
@@ -65,7 +65,9 @@
     }
 </script>
 <?php 
-     echo $_POST;
+     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo "Dados recebidos: ";
+        print_r($_POST);}
 ?>
 </body>
 </html>
