@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <?php include_once "./phpqrcode-master/qrlib.php" ?>
+    <?php include_once "./phpqrcode-master/qrlib.php"; include_once "./qrcode/geradorQrcode.php";?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escaner de QrCode</title>
@@ -24,32 +24,48 @@
     <div id="reader"></div>
     <p id="qrCodeParagh" class="escondido encontrado">QrCode Encontrado!</p>
     <div class="divBtn">
-        <a href="" id="linkqrCode"><button disabled class="validar" id="btnValidar">Validar</button></a>
+            <button type="submit" disabled class="validar" id="btnValidar">Validando</button>
     </div>
     
-    <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
-    <script>
-        var linkQr = document.getElementById("linkqrCode")
-        var btnValidar =document.getElementById("btnValidar")
-        function onScanSuccess(decodedText, decodedResult) {
-            linkQr.setAttribute("href", decodedText);
-            document.getElementById("qrCodeParagh").style.display = "block";
-            btnValidar.disabled = false
-        }
 
-        function onScanError(errorMessage) {console.log('Erro de escaneamento: ', errorMessage);}
+<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+<script>
+    var linkQr = document.getElementById("linkqrCode")
+    var btnValidar =document.getElementById("btnValidar")
+    function onScanSuccess(decodedText, decodedResult) {
+        //linkQr.setAttribute("href", decodedText);
+        document.getElementById("qrCodeParagh").style.display = "block";
+        btnValidar.disabled = false
+        enviarPost(decodedText)
+    }
 
-        Html5Qrcode.getCameras().then(devices => {
-            // Selecionar a câmera padrão (por exemplo, a frontal)
-            const cameraId = devices[1].id; // Ou use devices[n] para outra câmera
-            
-            const html5QrCode = new Html5Qrcode("reader");
-            html5QrCode.start(cameraId, 
-                {fps: 30, qrbox: 250},
-                onScanSuccess, onScanError
-            );
-        }).catch(err => {console.error("Erro ao obter câmeras: ", err);});
-    </script>
+    function onScanError(errorMessage) {console.log('Erro de escaneamento: ', errorMessage);}
 
+    Html5Qrcode.getCameras().then(devices => {
+        // Selecionar a câmera padrão (por exemplo, a frontal)
+        const cameraId = devices[1].id; // Ou use devices[n] para outra câmera
+        
+        const html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start(cameraId,
+                            {fps: 30, qrbox: 250},
+                            onScanSuccess, onScanError
+                            );
+    }).catch(err => {console.error("Erro ao obter câmeras: ", err);});
+
+    function enviarPost(decodedText)
+    {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "./scannerQr.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        xhr.onreadystatechange = () =>
+        {if (xhr.readyState == 4 && xhr.status == 200){console.log(xhr.responseText)}}
+        var dados = "qrCode=123"
+        xhr.send(dados);
+        alert("enviado!")
+    }
+</script>
+<?php 
+     echo $_POST;
+?>
 </body>
 </html>
