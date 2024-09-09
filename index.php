@@ -17,15 +17,15 @@
     require_once "./qrcode/geradorQrcode.php";
     $idQrCode = isset($_POST['idQrCode']) ? $_POST['idQrCode'] : null;
     $resultQuery = isset($_POST['idQrCode'])  ? Query($idQrCode) : null;
+
     if($resultQuery != null)
     {
-        $testinho = $resultQuery['qrcode'];
-        echo $resultQuery['qrcode'];
+        $testinho = $resultQuery['qrcodeid'];
+        echo $resultQuery['qrcodeid'];
         ob_start();
         QRcode::png($testinho, null, QR_ECLEVEL_L, 10);
         $imageString = base64_encode(ob_get_contents());
         ob_end_clean();
-        
     }
 
 ?>

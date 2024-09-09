@@ -12,11 +12,10 @@
             border: 1px solid black;
         }
 
-        .escondido{display: none;}
-        .encontrado{font-size: 1.8rem; margin: 10px;}
-        .validar{font-size: 2rem; color: aqua; background-color: burlywood;
-        padding: 10px; margin: 40px; align-self: center;}
-        .divBtn{text-align: center;}
+        .escondido {display: none;}
+        .encontrado {font-size: 1.8rem; margin: 10px;}
+        .validar {font-size: 2rem; color: aqua; background-color: burlywood; padding: 10px; margin: 40px; align-self: center;}
+        .divBtn {text-align: center;}
     </style>
 </head>
 <body>
@@ -24,50 +23,66 @@
     <div id="reader"></div>
     <p id="qrCodeParagh" class="escondido encontrado">QrCode Encontrado!</p>
     <div class="divBtn">
-            <button type="submit" disabled class="validar" id="btnValidar">Validando</button>
+        <button type="submit" class="validar" id="btnValidar" onclick="validar()">Validando</button>
     </div>
     
 <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
 <script>
-    var linkQr = document.getElementById("linkqrCode")
-    var btnValidar =document.getElementById("btnValidar")
+    var linkQr = document.getElementById("linkqrCode");
+    var btnValidar = document.getElementById("btnValidar");
+    var html5QrCode;
+    var xhr = new XMLHttpRequest();
+    
+    xhr.open("POST", "./controllers/dbTeste.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    xhr.onload = () =>{
+        if (xhr.status >=200 && xhr.status <300){
+            var response = JSON.parse(xhr.responseText)
+            alert(response.status + response.message)
+        }
+        else alert("NAO VEIO NADA")
+    }
 
     function onScanSuccess(decodedText, decodedResult) {
-        //linkQr.setAttribute("href", decodedText);
         document.getElementById("qrCodeParagh").style.display = "block";
-        btnValidar.disabled = false
-        enviarPost(decodedText)
-    }
+        enviarPost(decodedText);
+        // Para de ler após encontrar o QR Code
+        html5QrCode.stop().then(() => {
+            console.log("Scanner parado com sucesso.");
+        }).catch(err => {
+            console.error("Erro ao parar o scanner: ", err);
+        });}
 
-    function onScanError(errorMessage) {console.log('Erro de escaneamento: ', errorMessage);}
+    function onScanError(errorMessage) {
+        console.log('Erro de escaneamento: ', errorMessage);}
 
-    Html5Qrcode.getCameras().then(devices => {
-        // Selecionar a câmera padrão (por exemplo, a frontal)
-        const cameraId = devices[1].id; // Ou use devices[n] para outra câmera
+    function validar() {
+        Html5Qrcode.getCameras().then(devices => {
+            // Selecionar a câmera padrão (por exemplo, a frontal)
+            const cameraId = devices[1].id; // Ou use devices[n] para outra câmera
+
+            html5QrCode = new Html5Qrcode("reader");
+            
+            html5QrCode.start(cameraId,
+                {fps: 30, qrbox: 250},
+                onScanSuccess, onScanError
+            );
+        }).catch(err => {
+            console.error("Erro ao obter câmeras: ", err);
+        });}
+
+    function enviarPost(decodedText) {
         
-        const html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start(cameraId,
-                            {fps: 30, qrbox: 250},
-                            onScanSuccess, onScanError);
+        xhr.open("POST", "./controllers/dbTeste.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                }};
+        var dados = "qrCode=" + encodeURIComponent(decodedText);
+        xhr.send(dados);}
 
-    }).catch(err => {console.error("Erro ao obter câmeras: ", err);});
-
-    function enviarPost(decodedText)
-    {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "./scannerQr.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-        xhr.onreadystatechange = () =>
-        {if (xhr.readyState == 4 && xhr.status == 200){console.log(xhr.responseText)}}
-        var dados = "qrCode=123"
-        xhr.send(dados);
-        alert("enviado!")
-    }
 </script>
-<?php 
-     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo "Dados recebidos: ";
-        print_r($_POST);}
-?>
+
 </body>
 </html>
