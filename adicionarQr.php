@@ -9,31 +9,28 @@
     <h1>Cadastro de QrCode</h1>
     <form method="post">
         <label for="nomeC">Nome Completo</label>
-        <input type="text" name="nomeC" id="nomeC">
+        <input type="text" name="nomeC" id="nomeC" required>
 
         <label for="nomeC">Cpf</label>
-        <input type="text" name="cpf" id="cpf">
+        <input type="text" name="cpf" id="cpf" required>
 
         <label for="nomeC">Id do Ingresso</label>
-        <input type="text" name="idIngresso" id="idIngresso">
+        <input type="number" name="idIngresso" id="idIngresso" required>
 
         <input type="submit" value="Adicionar">
     </form>
 </body>
 
 <?php
-include_once "./controllers/createQr.php";
-    $postData = isset($_POST) ? $_POST:null;
-    $string = $postData['nomeC'] . $postData['cpf'] . $postData['idIngresso'];
-    echo $string . "\n";
-    $secretKey = "fabricad";
+    include_once "./controllers/CEQr.php";
+    require_once "./controllers/verificaAPI.php";
 
-    $criptografado = hash_hmac("sha256", $secretKey, $secretKey);
-    echo $criptografado;
-    
-   if($criptografado != null)
-   {
-        createQrCode($criptografado);
-   }
+    $postData = isset($_POST) ? $_POST : null;
+    $string = isset($_POST['idIngresso']) ? $postData['nomeC'] . $postData['cpf'] . $postData['idIngresso'] : null;
+    $cpfC = isset($postData['cpf']) ? $postData['cpf'] : null;
+    $idIngresso = isset($postData['idIngresso']) ? $postData['cpf'] : null;
+    $secretKey = "fabricad";
+    $criptografado = hash_hmac("sha256", $string, $secretKey);
+    if($criptografado != null) verificarIntegridade($cpfC, $criptografado, $idIngresso);
 ?>  
 </html>
