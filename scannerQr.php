@@ -5,21 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escaner de QrCode</title>
-    <style>
-        #reader {
-            width: 100%;
-            height: auto;
-            border: 1px solid black;
-        }
-
-        .escondido {display: none;}
-        .encontrado {font-size: 1.8rem; margin: 10px;}
-        .validar {font-size: 2rem; color: aqua; background-color: burlywood; padding: 10px; margin: 40px; align-self: center;}
-        .divBtn {text-align: center;}
-    </style>
+    <link rel="stylesheet" href="./public/scannerQr.css">
 </head>
 <body>
-    <h1>Escaner de QrCode</h1>
     <div id="reader"></div>
     <p id="qrCodeParagh" class="escondido encontrado">QrCode Encontrado!</p>
     <div class="divBtn">

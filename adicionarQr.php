@@ -1,12 +1,17 @@
+<?php session_start();
+    include_once "./controllers/CEQr.php";
+    require_once "./controllers/verificaAPI.php";
+    require_once "./controllers/adicionarQrController.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de QrCode</title>
+    <link rel="stylesheet" href="./public/adicionarQr.css">
 </head>
 <body>
-    <h1>Cadastro de QrCode</h1>
     <form method="post">
         <label for="nomeC">Nome Completo</label>
         <input type="text" name="nomeC" id="nomeC" required>
@@ -19,12 +24,10 @@
 
         <input type="submit" value="Adicionar">
     </form>
+    <script src="./public/js/adicionarQr.js"></script>
 </body>
 
 <?php
-    include_once "./controllers/CEQr.php";
-    require_once "./controllers/verificaAPI.php";
-
     $postData = isset($_POST) ? $_POST : null;
     $string = isset($_POST['idIngresso']) ? $postData['nomeC'] . $postData['cpf'] . $postData['idIngresso'] : null;
     $cpfC = isset($postData['cpf']) ? $postData['cpf'] : null;

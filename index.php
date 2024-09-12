@@ -1,36 +1,36 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="./public/index.css">
 </head>
 <body>
-    <form method="post">
-        <label for="idQrCode">Informe o ID</label>
-        <input type="number" id="idQrCode" name="idQrCode">
-
-        <button type="Mostrar QrCode"></button>
-    </form>    
-
+    <div class="login-container">
+        <form id="loginForm" method="post">
+            <h2>Login</h2>
+            <div class="input-group">
+                <input type="text" id="username" name="login" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="senha" required>
+                <label for="password">Password</label>
+            </div>
+            <button type="submit">Login</button>
+            <p class="error-message" id="errorMessage"></p>
+            <div class="additional-links">
+                <a href="#" id="forgotPassword">Esqueci minha senha</a>
+                <a href="./cadastroUsuario.php" id="register">Cadastre-se</a>
+            </div>
+        </form>
+    </div>
+    <script src="./public/js/index.js"></script>
 <?php
-    require_once "./qrcode/geradorQrcode.php";
-    $idQrCode = isset($_POST['idQrCode']) ? $_POST['idQrCode'] : null;
-    $resultQuery = isset($_POST['idQrCode'])  ? Query($idQrCode) : null;
-
-    if($resultQuery != null)
-    {
-        $testinho = $resultQuery['qrcodeid'];
-        echo $resultQuery['qrcodeid'];
-        ob_start();
-        QRcode::png($testinho, null, QR_ECLEVEL_L, 10);
-        $imageString = base64_encode(ob_get_contents());
-        ob_end_clean();
-    }
+    require_once "./controllers/loginController.php";
 
 ?>
-<div>
-    <img src="data:image/png;base64,<?= $imageString ?>" alt="QR Code">
-</div>
 </body>
 </html>
