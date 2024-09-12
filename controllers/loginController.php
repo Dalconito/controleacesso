@@ -1,7 +1,7 @@
 <?php
-session_start();
-
-if ($_POST['login'] == 'admin' && $_POST['senha'] == '1234')
+$loginUser = isset($_POST['login']) ? $_POST['login'] : null;
+$senhaUser = isset($_POST['senha']) ? $_POST['senha'] : null;
+if ($loginUser == 'admin' && $senhaUser == '1234')
 {
     $_SESSION['username'] = 'admin';
     $_SESSION['cpf'] = '1234cpf';

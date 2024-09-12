@@ -1,4 +1,4 @@
-/* Reutilizando o estilo existente e adaptando para o novo formulário */
+/* Estilos gerais */
 * {
     margin: 0;
     padding: 0;
@@ -12,201 +12,125 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #333;
 }
 
-.login-container {
-    background: white;
+/* Container do formulário */
+.form-container {
+    background-color: white;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    width: 350px;
 }
 
+/* Estilos do título */
 form h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     color: #333;
 }
 
+/* Estilos gerais para grupos de input */
 .input-group {
     position: relative;
     margin-bottom: 1.5rem;
 }
 
-.input-group input {
+/* Estilo dos inputs */
+.input-group input,
+.input-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     outline: none;
     background: transparent;
     font-size: 16px;
     color: #333;
+    transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 
+/* Efeito ao focar no input */
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #74ebd5;
+    background-color: #eef9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para o select */
+.input-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+/* Label dos inputs */
 .input-group label {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 12px;
+    left: 12px;
     font-size: 16px;
     color: #999;
     transition: 0.3s;
     pointer-events: none;
 }
 
+/* Label ao focar ou preencher o campo */
 .input-group input:focus + label,
-.input-group input:valid + label {
+.input-group input:valid + label,
+.input-group select:focus + label,
+.input-group select:valid + label {
     top: -15px;
     left: 10px;
     font-size: 12px;
     color: #74ebd5;
 }
 
+/* Botão de submit */
 button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 5px;
-    background: #74ebd5;
+    border-radius: 8px;
+    background-color: #74ebd5;
     color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s;
-    margin-bottom: 1rem; /* Adiciona espaço entre o botão e os links adicionais */
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background: #ACB6E5;
+    background-color: #ACB6E5;
+    transform: scale(1.02);
 }
 
-.error-message {
-    margin-top: 1rem;
-    color: red;
-    text-align: center;
-    display: none;
-}
-
-.additional-links {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.additional-links a {
-    display: block;
-    color: #74ebd5;
-    font-size: 14px;
-    text-decoration: none;
-    margin: 5px 0;
-}
-
-.additional-links a:hover {
-    text-decoration: underline;
-}
-
-/* Reutilizando o estilo existente e adaptando para o novo formulário */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-}
-
-.form-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 300px;
-}
-
-form h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 1.5rem;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    background: transparent;
-    font-size: 16px;
-    color: #333;
-}
-
-.input-group label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 16px;
-    color: #999;
-    transition: 0.3s;
-    pointer-events: none;
-}
-
-.input-group input:focus + label,
-.input-group input:valid + label {
-    top: -15px;
-    left: 10px;
-    font-size: 12px;
-    color: #74ebd5;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 1rem; /* Adiciona espaço entre os botões e os campos acima */
-}
-
-button[type="submit"] {
-    background: #74ebd5;
-    color: white;
-}
-
-button[type="submit"]:hover {
-    background: #ACB6E5;
-}
-
+/* Link voltar */
 .back-button {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     text-align: center;
     text-decoration: none;
     color: #333;
-    background: #f0f0f0;
-    margin-top: 0.5rem; /* Adiciona um pouco de espaço entre os botões */
-    transition: background 0.3s;
+    background-color: #f0f0f0;
+    margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
 .back-button:hover {
-    background: #ddd;
+    background-color: #ddd;
 }
 
+/* Mensagem de erro */
 .error-message {
     margin-top: 1rem;
     color: red;
