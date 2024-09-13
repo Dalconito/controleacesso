@@ -1,13 +1,20 @@
 <?php
+require_once (__DIR__. "/../database/database.php");
+
 $loginUser = isset($_POST['login']) ? $_POST['login'] : null;
 $senhaUser = isset($_POST['senha']) ? $_POST['senha'] : null;
-if ($loginUser == 'admin' && $senhaUser == '1234')
-{
-    $_SESSION['username'] = 'admin';
-    $_SESSION['cpf'] = '1234cpf';
-    $_SESSION['email'] = 'admin@gmail.com';
-
-    echo "Sessao do: " .  $_SESSION['username'];
-    header("location: ./adicionarQr.php");
+if($loginUser !=null){
+    $result = selectUser($loginUser);
+    if($loginUser == $result['loginusr']){
+        if($senhaUser == $result['senha'])
+        {
+            if($result['tipo_conta'] == 1)
+            $_SESSION['tipoUsr'] = 'admin';
+            else
+            $_SESSION['tipoUsr'] = 'comum';
+        header("location: ./adicionarQr.php");
+        }
+        else{echo "SENHA INCORRETA";}
+    }
+    else{echo "LOGIN NAO ENCONTRADO";}
 }
-else {echo "XIIIIIIIIIIIIIII";}

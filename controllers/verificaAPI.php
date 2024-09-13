@@ -43,6 +43,5 @@ function getApi()
                     {echo "Adicionando qrCode, Verificar pelo ID";
                 createQrCode($qrCodeId, $idIngresso);}
                 }
-        else{echo "CPF NAO ENCONTRADO";}
     }
 }

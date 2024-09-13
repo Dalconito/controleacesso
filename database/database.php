@@ -1,15 +1,35 @@
 <?php 
-function connectDB(){
-    $servidor = "192.168.3.35"; $usuario = "dalconito"; $senha = "HelloWorld";
-    $banco = "fabrica"; $porta = "3366";
-    $conexao = mysqli_connect($servidor,$usuario,$senha,$banco);
-    return $conexao;}
+function connectDb(){
+    $host = "webdecision.mysql.uhserver.com";
+    $user = "dalconito";
+    $database = "webdecision";
+    $senha = "HelloWorld*89";
+    $conn = mysqli_connect($host, $user, $senha, $database);
+    return $conn;
+}
 
 function select($postData){
-    $conn = connectDB();
+    $conn = connectDb();
     $selectDbQuery = "SELECT * FROM qrcode WHERE qrcodeid=? ";
     $query = $conn->prepare($selectDbQuery);
     if($query === false){printError();}
+    $query->bind_param("s", $postData);
+
+    if($query->execute()){
+        $resultDbQuery = $query->get_result();
+        $resultQuery = $resultDbQuery->fetch_assoc();
+        echo "SELECAO PARA VERIFICACAO FEITA";
+    }
+    else {echo "NAO DEU CERTO A SELECAO";}
+    $query->close(); $conn->close();
+    return $resultQuery;
+}
+
+function selectUser($postData){
+    $conn = connectDb();
+    $selectDbQuery = "SELECT * FROM usuarios WHERE loginusr=? ";
+    $query = $conn->prepare($selectDbQuery);
+    if($query === false){echo "DEU RUIM";}
     $query->bind_param("s", $postData);
 
     if($query->execute()){

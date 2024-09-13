@@ -35,5 +35,8 @@
     $secretKey = "fabricad";
     $criptografado = hash_hmac("sha256", $string, $secretKey);
     if($criptografado != null) verificarIntegridade($cpfC, $criptografado, $idIngresso);
+
+
+    echo $_SESSION['tipoUsr'];
 ?>  
 </html>
