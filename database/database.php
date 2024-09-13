@@ -5,14 +5,16 @@ function connectDb(){
     $database = "webdecision";
     $senha = "HelloWorld*89";
     $conn = mysqli_connect($host, $user, $senha, $database);
+    echo "CONEXAO FEITA COM SUCESSO";
     return $conn;
 }
 
 function select($postData){
     $conn = connectDb();
+    echo "CONEXAO FEITA COM SUCESSO";
     $selectDbQuery = "SELECT * FROM qrcode WHERE qrcodeid=? ";
     $query = $conn->prepare($selectDbQuery);
-    if($query === false){printError();}
+    if($query === false){echo"DEU ERRO NO PREPARAR";}
     $query->bind_param("s", $postData);
 
     if($query->execute()){

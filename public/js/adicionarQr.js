@@ -4,28 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const cpf = document.getElementById('cpf');
     const idIngresso = document.getElementById('idIngresso');
     const submitButton = form.querySelector('input[type="submit"]');
-
+    
     form.addEventListener('submit', (e) => {
         e.preventDefault(); // Prevent default form submission for validation
         
+        const msgUser = document.getElementById('msgUsr');
         const cpfValue = cpf.value;
         const nomeValue = nomeC.value;
         const idIngressoValue = idIngresso.value;
+        let isValid = true; // Flag to track if the form is valid
 
         // Basic CPF validation (just checking length)
-        if (cpfValue.length !== 11) {
-            alert("Por favor, insira um CPF válido com 11 dígitos.");
-            return;
+        if (cpfValue.length !== 14) {
+            msgUser.style.display = 'block';
+            msgUser.textContent = 'Por favor, insira um CPF válido.';
+            isValid = false; // Mark the form as invalid
+        } else {
+            msgUser.style.display = 'none';
         }
 
         // Basic check for empty fields
         if (nomeValue === '' || idIngressoValue === '') {
             alert("Por favor, preencha todos os campos.");
-            return;
+            isValid = false; // Mark the form as invalid
         }
 
-        // Simulate successful form submission
-        alert("Cadastro realizado com sucesso!");
-        form.submit();
+        // If all validations pass, submit the form
+        if (isValid) {
+            form.submit();
+        }
     });
 });

@@ -1,4 +1,5 @@
-<?php session_start(); ?>
+<?php session_start(); require_once "./controllers/loginController.php";?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +29,5 @@
         </form>
     </div>
     <script src="./public/js/index.js"></script>
-<?php
-    require_once "./controllers/loginController.php";
-
-?>
 </body>
 </html>

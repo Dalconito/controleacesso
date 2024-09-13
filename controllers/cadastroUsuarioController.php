@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__ . "/../database/database.php");
+
 $loginUsr = isset($_POST['login']) ? $_POST['login'] : null;
 $cpfUsr = isset($_POST['cpf']) ? $_POST['cpf'] : null;
 $emailUsr = isset($_POST['email']) ? $_POST['email'] : null;
@@ -8,16 +10,6 @@ $passUser = isset($_POST['password']) ? $_POST['password'] : null;
 if($loginUsr && $cpfUsr && $emailUsr && $tipoUsr && $passUser !=null){
     createUser($loginUsr, $cpfUsr, $emailUsr, $tipoUsr, $passUser);
 }
-
-function connectDbUsuarios(){
-    $host = "webdecision.mysql.uhserver.com";
-    $user = "dalconito";
-    $database = "webdecision";
-    $senha = "HelloWorld*89";
-    $conn = mysqli_connect($host, $user, $senha, $database);
-    return $conn;
-}
-
 function createUser($login,$cpf,$email,$tipoConta,$senha ){
     $conn = connectDb();
     $query = "INSERT INTO usuarios (loginusr, cpf, email,tipo_conta, senha) VALUES (?,?,?,?,?);";

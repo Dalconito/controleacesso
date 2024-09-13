@@ -23,6 +23,7 @@
         <input type="number" name="idIngresso" id="idIngresso" required>
 
         <input type="submit" value="Adicionar">
+        <p id="msgUsr"></p>
     </form>
     <script src="./public/js/adicionarQr.js"></script>
 </body>
@@ -36,7 +37,5 @@
     $criptografado = hash_hmac("sha256", $string, $secretKey);
     if($criptografado != null) verificarIntegridade($cpfC, $criptografado, $idIngresso);
 
-
-    echo $_SESSION['tipoUsr'];
 ?>  
 </html>

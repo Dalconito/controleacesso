@@ -1,4 +1,6 @@
 <?php
+
+require_once(__DIR__."./../database/database.php");
 $postData = isset($_POST['qrCode']) ? $_POST['qrCode'] : null;
 $response = [];
 
@@ -69,7 +71,7 @@ function printErroExecute($execute){
     fwrite($alterHandle, "\nErro ao executar a $execute - " . date("d-m-Y h-i-s"));
     fclose($alterHandle);}
 
-function connectDB(){
+function connectDBs(){
     
     $servidor = "192.168.3.35"; $usuario = "dalconito"; $senha = "HelloWorld";
     $banco = "fabrica"; $porta = "3366";

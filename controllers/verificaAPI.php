@@ -25,23 +25,39 @@ function getApi()
 }
 
     function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
-    $dataApi = getApi();
-    $data = $dataApi['data'];
-    foreach ($data as $varredura)
-    {
-        if ($varredura['cliente']['doc1'] == $cpfUser)
-            if($varredura['status']['id'] != 9)
-                {echo "Ingresso nao Disponivel";}
-            else
-                {
-                    $select = select($qrCodeId);
-                    if($select)
-                    {
-                        echo "QR CODE JA GERADO";
-                    }
-                    else
-                    {echo "Adicionando qrCode, Verificar pelo ID";
-                createQrCode($qrCodeId, $idIngresso);}
+        $dataApi = getApi();
+        $data = $dataApi['data'];
+        $boolcpf = false;
+        $boolStatus = false;
+        $boolQrCode = false;
+        foreach ($data as $varredura){
+            if ($varredura['cliente']['doc1'] == $cpfUser){
+                $boolcpf = true;
+                if($varredura['status']['id'] != 9)
+                    {$boolStatus = false;}
+                else{
+                        $select = select($qrCodeId);
+                        if($select)
+                        {$boolQrCode=false;}
+                        else{
+                            echo "Adicionando qrCode, Verificar pelo ID";
+                            createQrCode($qrCodeId, $idIngresso);
+                            $boolcpf = true;
+                            $boolStatus = true;
+                            $boolQrCode = true;
+                        }
                 }
+                
+            }
+        }
+        $result = match (false) {
+            $boolcpf && $boolStatus && $boolQrCode => 'Todos são verdadeiros',
+            $boolcpf && $boolStatus => 'CPF e Status são verdadeiros',
+            $boolcpf => 'Somente o CPF é verdadeiro',
+            $boolStatus => 'Somente o Status é verdadeiro',
+            $boolQrCode => 'Somente o QRCode é verdadeiro',
+            default => 'Nenhuma condição foi satisfeita',
+        };
+        
+        echo $result;
     }
-}

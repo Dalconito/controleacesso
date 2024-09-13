@@ -1,7 +1,7 @@
 <?php
 include_once "./phpqrcode-master/qrlib.php";
 
-function connectDb()
+function connectDba()
 {
     $server = "192.168.3.35"; $user = "dalconito"; $pass = "HelloWorld"; $database = "fabrica";
     $conn = mysqli_connect($server, $user, $pass, $database);

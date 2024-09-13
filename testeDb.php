@@ -1,12 +1,5 @@
 <?php
 
-function connectDB(){
-    
-    $servidor = "pitaspark.mysql.uhserver.com"; $usuario = "dalconito";
-    $senha = "Helloworld*89"; $banco = "pitaspark";
-    $conexao = mysqli_connect($servidor,$usuario,$senha,$banco);
-    return $conexao;}
-
     function getProduto(){$conexao = connectDB();
         $selectDBquery = "SELECT * FROM usuarios order by id asc;";
         $resultQuery = mysqli_query($conexao, $selectDBquery);
