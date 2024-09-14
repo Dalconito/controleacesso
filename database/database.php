@@ -5,7 +5,6 @@ function connectDb(){
     $database = "webdecision";
     $senha = "HelloWorld*89";
     $conn = mysqli_connect($host, $user, $senha, $database);
-    echo "CONEXAO FEITA COM SUCESSO";
     return $conn;
 }
 
@@ -20,7 +19,6 @@ function select($postData){
     if($query->execute()){
         $resultDbQuery = $query->get_result();
         $resultQuery = $resultDbQuery->fetch_assoc();
-        echo "SELECAO PARA VERIFICACAO FEITA";
     }
     else {echo "NAO DEU CERTO A SELECAO";}
     $query->close(); $conn->close();
@@ -37,7 +35,6 @@ function selectUser($postData){
     if($query->execute()){
         $resultDbQuery = $query->get_result();
         $resultQuery = $resultDbQuery->fetch_assoc();
-        echo "SELECAO PARA VERIFICACAO FEITA";
     }
     else {echo "NAO DEU CERTO A SELECAO";}
     $query->close(); $conn->close();

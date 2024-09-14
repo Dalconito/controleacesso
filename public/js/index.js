@@ -1,19 +1,12 @@
-/*
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevents form from submitting
+var xhr = new XMLHttpRequest();
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('errorMessage');
-
-    // Simple validation
-    if (username === 'admin' && password === '1234') {
-        errorMessage.style.display = 'none';
-        alert('Login successful');
+xhr.open("POST", "./../controllers/loginController.php", true);
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.onload = () => {
+    if (xhr.status >= 200 && xhr.status < 300) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.status + response.message);
     } else {
-        errorMessage.textContent = 'Invalid username or password';
-        errorMessage.style.display = 'block';
+        alert("Erro ao comunicar com o servidor");
     }
-});
-
-*/
+};

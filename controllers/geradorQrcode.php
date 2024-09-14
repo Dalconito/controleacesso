@@ -1,11 +1,6 @@
 <?php
 include_once "./phpqrcode-master/qrlib.php";
-
-function connectDba()
-{
-    $server = "192.168.3.35"; $user = "dalconito"; $pass = "HelloWorld"; $database = "fabrica";
-    $conn = mysqli_connect($server, $user, $pass, $database);
-    return $conn;}
+require_once (__DIR__."/../database/database.php");
 
 function Query($idQrCode)
 {$conn = connectDb();

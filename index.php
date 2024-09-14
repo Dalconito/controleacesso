@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="stylesheet" href="./public/index.css">
+    <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <body>
     <div class="login-container">
@@ -28,6 +28,6 @@
             </div>
         </form>
     </div>
-    <script src="./public/js/index.js"></script>
+    <script src="./public/js/index.js" defer></script>
 </body>
 </html>

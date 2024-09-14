@@ -15,7 +15,7 @@
     </form>    
 
 <?php
-    require_once "./qrcode/geradorQrcode.php";
+    require_once "./controllers/geradorQrcode.php";
     $idQrCode = isset($_POST['idQrCode']) ? $_POST['idQrCode'] : null;
     $resultQuery = isset($_POST['idQrCode'])  ? Query($idQrCode) : null;
 
