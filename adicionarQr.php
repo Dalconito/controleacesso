@@ -35,7 +35,7 @@
     $secretKey = "fabricad";
     $string = isset($_POST['idIngresso']) ? $postData['nomeC'] . $postData['cpf'] . $postData['idIngresso'] : null;
     $criptografado = hash_hmac("sha256", $string, $secretKey);
-    if($criptografado != null) {verificarIntegridade($cpfC, $criptografado, $idIngresso); echo $idIngresso;}
+    if($criptografado != null) {verificarIntegridade($cpfC, $criptografado, $idIngresso);}
 
 ?>  
 </html>

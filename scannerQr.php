@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <?php include_once "./phpqrcode-master/qrlib.php"; include_once "./qrcode/geradorQrcode.php";?>
+    <?php include_once "./phpqrcode-master/qrlib.php"; require_once(__DIR__. "/controllers/geradorQrcode.php");?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escaner de QrCode</title>
-    <link rel="stylesheet" href="./public/scannerQr.css">
+    <link rel="stylesheet" href="./public/css/scannerQr.css">
 </head>
 <body>
     <div id="reader"></div>

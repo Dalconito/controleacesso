@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."./../database/database.php");
+require_once(__DIR__."/../database/database.php");
 $postData = isset($_POST['qrCode']) ? $_POST['qrCode'] : null;
 $response = [];
 
@@ -19,7 +19,7 @@ $response = [];
 
     if ($resultQuery['stat'] == 0)
     {updateQrCode($postData);}
-    else enviarResposta($status="001", $message="QrCode Já validado");
+    else enviarResposta("001", "QrCode Já validado");
 
 function updateQrCode($postData){
     $conn = connectDb();
@@ -31,7 +31,8 @@ function updateQrCode($postData){
     if($query->execute()){printInseriu();} 
     else {printErroExecute($query->error);}
     $query->close(); $conn->close();
-    enviarResposta("002", "ALTERADO");}
+    enviarResposta("002", "ALTERADO");
+}
 
 function printSucesso($msg){
     $alterFile = "console.log";
@@ -72,9 +73,7 @@ function enviarResposta($status, $message){
     header('Content-Type: application/json'); // Define o tipo de conteúdo como JSON
 
     // Simulação de dados que você quer enviar de volta para o frontend
-    $response = array(
-        "status" => $status,
-        "message" => $message);
+    $response = ["status" => $status, "message" => $message];
 
     // Converta o array para JSON e envie a resposta
     echo json_encode($response);}
