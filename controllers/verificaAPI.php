@@ -50,14 +50,4 @@ function getApi()
                 
             }
         }
-        $result = match (false) {
-            $boolcpf && $boolStatus && $boolQrCode => 'Todos são verdadeiros',
-            $boolcpf && $boolStatus => 'CPF e Status são verdadeiros',
-            $boolcpf => 'Somente o CPF é verdadeiro',
-            $boolStatus => 'Somente o Status é verdadeiro',
-            $boolQrCode => 'Somente o QRCode é verdadeiro',
-            default => 'Nenhuma condição foi satisfeita',
-        };
-        
-        echo $result;
     }
