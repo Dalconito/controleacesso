@@ -8,11 +8,3 @@ function Query($idQrCode)
     $resultQuery = mysqli_query($conn, $selectQuery);
     $returnQuery = mysqli_fetch_assoc($resultQuery);
     $conn->close(); return $returnQuery;}
-
-
-function gerarQrCode($texto)
-{QRcode::png($texto, 'qrcode.jpeg', QR_ECLEVEL_L, 10);
-    return QRcode::png($texto);}
-
-function teste()
-{echo "FUNCIONOU";}

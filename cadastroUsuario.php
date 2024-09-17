@@ -26,7 +26,7 @@
             <div class="input-group">
                 <select name="tipo_grupo" id="tipo_grupo">
                     <option value="1">Cliente</option>
-                    <option value="0">Lojista</option>
+                    <option value="2">Lojista</option>
                 </select>
                 <label for="tipo_grupo">Tipo de Conta</label>
             </div>

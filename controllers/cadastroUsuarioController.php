@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . "/../database/database.php");
+require_once __DIR__ . "/print.php";
 
 $loginUsr = isset($_POST['login']) ? $_POST['login'] : null;
 $cpfUsr = isset($_POST['cpf']) ? $_POST['cpf'] : null;
@@ -14,7 +15,7 @@ function createUser($login,$cpf,$email,$tipoConta,$senha ){
     $conn = connectDb();
     $query = "INSERT INTO usuarios (loginusr, cpf, email,tipo_conta, senha) VALUES (?,?,?,?,?);";
     $queryCreate = $conn->prepare($query);
-    if($queryCreate === false){echo "Erro ao preparar";}
+    if($queryCreate === false){printErroExecute("a preparacao da query na funcao createUser" . __FILE__);}
     $queryCreate->bind_param('sssis', $login,$cpf,$email,$tipoConta,$senha);
 
     if($queryCreate->execute()){

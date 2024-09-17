@@ -1,7 +1,6 @@
 <?php session_start();
     include_once "./controllers/CEQr.php";
     require_once "./controllers/verificaAPI.php";
-    require_once "./controllers/adicionarQrController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,5 +1,3 @@
-<?php session_start(); require_once "./controllers/loginController.php";?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
