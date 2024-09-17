@@ -22,7 +22,7 @@
         <input type="number" name="idIngresso" id="idIngresso" required>
 
         <input type="submit" value="Adicionar">
-        <p id="msgUsr"></p>
+        <div id="errorMessage"></div>
     </form>
     <script src="./public/js/adicionarQr.js" defer></script>
 </body>

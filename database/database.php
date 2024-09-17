@@ -10,7 +10,6 @@ function connectDb(){
 
 function select($postData){
     $conn = connectDb();
-    echo "CONEXAO FEITA COM SUCESSO";
     $selectDbQuery = "SELECT * FROM qrcode WHERE qrcodeid=? ";
     $query = $conn->prepare($selectDbQuery);
     if($query === false){echo"DEU ERRO NO PREPARAR";}

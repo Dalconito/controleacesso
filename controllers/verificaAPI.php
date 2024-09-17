@@ -2,6 +2,14 @@
 require_once (__DIR__. "/CEQr.php");
 require_once (__DIR__. "/../database/database.php" );
 
+
+function enviarResp($status, $message){
+    header('Content-Type: application/json'); // Define o tipo de conteúdo como JSON
+    $response = ["status" => $status, "message" => $message];
+    echo json_encode($response);
+    exit();
+}
+
 function getApi()
 {
     $urlApi = "https://sistema.sistemawbuy.com.br/api/v1/order/";
@@ -24,30 +32,50 @@ function getApi()
     return $dataApi = json_decode($response, true);
 }
 
-    function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
-        $dataApi = getApi();
-        $data = $dataApi['data'];
-        $boolcpf = false;
-        $boolStatus = false;
-        $boolQrCode = false;
-        foreach ($data as $varredura){
-            if ($varredura['cliente']['doc1'] == $cpfUser){
-                $boolcpf = true;
-                if($varredura['status']['id'] != 9)
-                    {$boolStatus = false;}
-                else{
-                        $select = select($qrCodeId);
-                        if($select)
-                        {$boolQrCode=false;}
-                        else{
-                            echo "Adicionando qrCode, Verificar pelo ID";
-                            createQrCode($qrCodeId, $idIngresso);
-                            $boolcpf = true;
-                            $boolStatus = true;
-                            $boolQrCode = true;
+function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
+    $dataApi = getApi();
+    $data = $dataApi['data']; $boolcpf = false;
+    $boolStatus = false; $boolQrCode = false;
+    $qrExistente = false; $adcQr = false;
+    $pedidoStatus = false;
+    foreach ($data as $varredura){
+        if ($varredura['cliente']['doc1'] == $cpfUser){
+            $boolcpf = true;
+            if($varredura['status']['id'] != 9)
+                {$boolStatus = false;}
+            else{
+                    $select = select($qrCodeId);
+                    if($select)
+                    {$qrExistente = false;}
+                    else{
+                        if($idIngresso == $varredura['id']){
+                            $qtde = (int)$varredura['produtos'][0]['qtd'];
+                            $idEvento = $varredura['produtos'][0]['produto_id'];
+                            
+                            createQrCode($qrCodeId, $idIngresso, $cpfUser, $qtde, $idEvento);
+                            $boolcpf = true; $boolStatus = true; $boolQrCode = true; 
+                            $qrExistente = true; $adcQr = true;
                         }
-                }
-                
+                        else $pedidoStatus = true;
+                    }
             }
+            
         }
     }
+    $resMatch = match (true) {
+        !$boolQrCode && !$boolStatus && !$boolcpf => "Verifique os dados e tente novamente",
+        !$boolQrCode && !$boolStatus => "Id e Status com Erro",
+        !$boolQrCode && !$boolcpf => "Id e Cpf com Erro",
+        !$boolStatus && !$boolcpf => "Status e Cpf com Problema",
+        !$boolQrCode => "Id com Erro",
+        $adcQr => "Adicionando QrCode",
+        !$boolStatus => "Status com Erro",
+        !$boolcpf => "Cpf com Erro",
+        !$qrExistente => "QrCode Existente",
+        !$pedidoStatus => "TUDO ERRADO",
+    };
+    
+    echo $resMatch;
+    //enviarResp("400", $resMatch);
+    
+}
