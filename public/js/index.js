@@ -13,7 +13,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                     alert(response.message);
                     window.location.href = "./adicionarQr.php"; // Substitua pela URL correta
                 } else {
-                    document.getElementById("errorMessage").innerText = response.message;
+                    console.log(xhr.responseText);
+                    document.getElementById("errorMessage").textContent = response.message;
                 }
             } catch (error) {
                 console.error("Erro ao processar a resposta:", error);

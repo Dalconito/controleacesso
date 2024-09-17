@@ -18,12 +18,14 @@
                 <input type="password" id="password" name="senha" required>
                 <label for="password">Password</label>
             </div>
+            <div id="errorMessage" class="input-group"></div>
             <button type="submit">Login</button>
             <p class="error-message" id="errorMessage"></p>
             <div class="additional-links">
                 <a href="#" id="forgotPassword">Esqueci minha senha</a>
                 <a href="./cadastroUsuario.php" id="register">Cadastre-se</a>
             </div>
+            
         </form>
     </div>
     <script src="./public/js/index.js" defer></script>
