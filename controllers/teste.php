@@ -1,25 +1,6 @@
 <?php
 
 
-$boolStatus = true;
-$boolcpf = false;
-$boolQrCode = false;
-
-$resMatch = match (true) {
-    !$boolQrCode && !$boolStatus && !$boolcpf => "Verifique os dados e tente novamente",
-    !$boolQrCode && !$boolStatus => "QrCode e Status com Erro",
-    !$boolQrCode && !$boolcpf => "QrCode e Cpf com Erro",
-    !$boolStatus && !$boolcpf => "Status e Cpf com Problema",
-    !$boolQrCode => "QrCode com Erro",
-    !$boolStatus => "Status com Erro",
-    !$boolcpf => "Cpf com Erro",
-    default => "Todos os dados estão corretos",
-};
-
-echo $resMatch;
-
-
-
 /*require_once (__DIR__. "/CEQr.php");
 require_once (__DIR__. "/../database/database.php" );
 

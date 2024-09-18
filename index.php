@@ -22,7 +22,7 @@
             <button type="submit">Login</button>
             <p class="error-message" id="errorMessage"></p>
             <div class="additional-links">
-                <a href="#" id="forgotPassword">Esqueci minha senha</a>
+                <a href="./recuperasenha.php" id="forgotPassword">Esqueci minha senha</a>
                 <a href="./cadastroUsuario.php" id="register">Cadastre-se</a>
             </div>
             
