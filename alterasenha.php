@@ -11,11 +11,11 @@
         <h2>Alteração de Senha</h2>
         <p>Por favor, insira a nova senha.</p>
         <form id="recuperacaoForm">
-            <input type="text" id="novaSenha" name="cpf" maxlength="14" placeholder="Digite sua nova senha" required>
+            <input type="text" id="novaSenha" name="cnovaSenhapf" maxlength="14" placeholder="Digite sua nova senha" required>
             
-            <input type="email" id="confirmaSenha" name="email" placeholder="Insira novamente" required>
+            <input type="text" id="confirmaSenha" name="confirmaSenha" placeholder="Insira novamente" required>
             
-            <button type="submit">Enviar</button>
+            <input type="submit">CLICA AQUI</input>
         </form>
         <p id="mensagemErro" class="mensagem-erro"></p>
     </div>
