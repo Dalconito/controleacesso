@@ -24,7 +24,7 @@
         <input type="number" name="idIngresso" id="idIngresso" required>
 
         <input type="submit" value="Adicionar">
-        <div id="errorMessage"></div>
+        <div id="msgUsr"></div>
     </form>
     </div>
     <script src="./public/js/adicionarQr.js" defer></script>

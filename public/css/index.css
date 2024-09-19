@@ -5,13 +5,94 @@
     font-family: 'Arial', sans-serif;
 }
 
+/* Estilo da animação de espera */
+.loader {
+    display: none; /* Inicialmente oculto */
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    text-align: center;
+    justify-content: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .principal {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    position: relative; /* Permite que o botão flutue sobre o conteúdo */
 }
+
+/* Menu lateral (inicialmente oculto à direita) */
+.side-menu {
+    height: 100%; /* Altura do menu igual à altura da página */
+    width: 0; /* Inicialmente escondido */
+    position: fixed; /* Fixa o menu na lateral direita */
+    top: 0;
+    right: 0; /* Alinhado à direita */
+    background-color: rgb(0, 0, 106); /* Cor de fundo */
+    overflow-x: hidden; /* Não mostra rolagem horizontal */
+    transition: 0.5s; /* Transição suave ao abrir/fechar */
+    padding-top: 60px; /* Espaço superior */
+    z-index: 1000; /* Assegura que o menu fique sobre outros elementos */
+}
+
+/* Links do menu */
+.side-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+/* Efeito ao passar o mouse */
+.side-menu a:hover {
+    background-color: #5757d1;
+}
+
+/* Botão para abrir o menu */
+.menu-btn {
+    font-size: 1.5rem;
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: fixed; /* Fixa o botão na tela */
+    top: 20px; /* Ajusta a posição superior */
+    right: 20px; /* Ajusta a posição à direita */
+    z-index: 999; /* Assegura que o botão fique sobre o menu */
+}
+
+/* Botão para fechar o menu */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    left: 25px; /* Dentro do menu */
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* Ajusta o botão de menu para garantir que ele não ocupe toda a largura da página */
+.menu-btn {
+    width: auto; /* Garante que o botão tenha apenas o tamanho necessário */
+    height: auto;
+    padding: 10px 20px; /* Ajuste o padding para o tamanho desejado do botão */
+}
+
 
 .login-container {
     background: white;
@@ -101,3 +182,57 @@ button:hover {
 .additional-links a:hover {
     text-decoration: underline;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo da animação de espera */
+.loader {
+    display: none; /* Inicialmente oculto */
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    text-align: center;
+    justify-content: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.principal {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    position: relative; /* Permite que o botão flutue sobre o conteúdo */
+}
+
+/* Estilo da animação de espera */
+.loader {
+    display: none; /* Inicialmente oculto */
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    text-align: center;
+    justify-content: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+

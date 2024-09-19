@@ -1,3 +1,14 @@
+function openMenu() {
+    document.getElementById("sideMenu").style.width = "250px";
+    document.body.classList.add("menu-open");
+}
+
+// Função para fechar o menu lateral
+function closeMenu() {
+    document.getElementById("sideMenu").style.width = "0";
+    document.body.classList.remove("menu-open");
+}
+
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Impede o envio padrão do formulário
 
@@ -5,23 +16,28 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     xhr.open("POST", "./controllers/loginController.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    document.getElementById('loader').style.display = 'block';
+
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === "success") {
-                    alert(response.message);
+                    document.getElementById('loader').style.display = 'none';
                     window.location.href = "./adicionarQr.php"; // Substitua pela URL correta
                 } else {
                     console.log(xhr.responseText);
+                    document.getElementById('loader').style.display = 'none';
+
                     document.getElementById("errorMessage").textContent = response.message;
                 }
             } catch (error) {
+                document.getElementById('loader').style.display = 'block';
                 console.error("Erro ao processar a resposta:", error);
-                alert("Erro ao processar a resposta do servidor.");
             }
         } else {
-            alert("Erro ao comunicar com o servidor");
+            document.getElementById('loader').style.display = 'block';
+            console.log("Erro ao comunicar com o servidor");
         }
     };
 
