@@ -15,6 +15,8 @@ if(isset($_SESSION['tipoUsr'])){
 </head>
 <body>
     <?php require_once "./templates/menu.php"; ?>
+    <div class="principal">
+
     <div class="login-container">
         <form id="loginForm" method="post">
             <h2>Login</h2>
@@ -35,6 +37,7 @@ if(isset($_SESSION['tipoUsr'])){
             </div>
             
         </form>
+    </div>
     </div>
     <script src="./public/js/index.js" defer></script>
 </body>

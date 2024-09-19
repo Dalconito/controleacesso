@@ -1,4 +1,4 @@
-function logout() {
+function asdasd() {
     const dataToSend = {
         cpf: '12345678901',
         email: 'exemplo@email.com'
@@ -20,6 +20,57 @@ function logout() {
     });
 
 }
+
+async function slogout() {
+    try {
+        const response = await fetch('./controllers/adcController.php', {
+            method: 'POST', // Certifique-se de que o método é POST
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // O cabeçalho define que estamos enviando JSON
+            },
+            body: JSON.stringify(data) // Converte os dados para JSON
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro: ${response.status}`);
+        }
+
+        const respostaJSON = await response.json();
+        console.log('Resposta do servidor:', respostaJSON);
+
+    } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+    }
+}
+
+
+const data = new URLSearchParams();
+data.append('nome', 'John Doe');
+data.append('email', 'johndoe@example.com');
+
+async function logout() {
+    try {
+        const response = await fetch('./controllers/adcController.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // Formato tradicional de formulário
+            },
+            body: data // Não precisa usar JSON.stringify
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro: ${response.status}`);
+        }
+
+        const respostaJSON = await response.json();
+        if(respostaJSON.status == "success"){window.location.href="./index.php"}
+        console.log('Resposta do servidor:', respostaJSON);
+
+    } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');

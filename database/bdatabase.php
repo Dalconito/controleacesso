@@ -1,9 +1,9 @@
 <?php 
 function connectDb(){
-    $host = "webdecision.mysql.uhserver.com";
-    $user = "dalconito";
-    $database = "webdecision";
-    $senha = "HelloWorld*89";
+    $host = "localhost";
+    $user = "root";
+    $database = "fabrica";
+    $senha = "";
     $conn = mysqli_connect($host, $user, $senha, $database);
     return $conn;
 }
