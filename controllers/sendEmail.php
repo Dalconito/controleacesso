@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 require "./../vendor/autoload.php";
 
 
-function recuperaSenha($userName){
+function recuperaSenha($userName, $email){
     $mail = new PHPMailer(true);
 
 try {
@@ -21,10 +21,10 @@ try {
 
     // Recipientes
     $mail->setFrom('no-reply@controledafabrica.com.br', 'Fabrica de Ingressos');
-    $mail->addAddress('terto.leoni@gmail.com', 'Leoni Terto');
+    $mail->addAddress($email, $userName);
 
     $token = bin2hex(random_bytes(50));  // Gera um token seguro
-    $resetLink = "https://192.168.3.35/testes/recuperasenha.php?token=" . $token;
+    $resetLink = "https://192.168.3.35/testes/alterasenha.php?token=" . $token;
     // Conteúdo do e-mail
     $mail->isHTML(true);
     $mail->Subject = 'Recuperação de Senha';
@@ -42,8 +42,8 @@ try {
     $mail->AltBody = "Olá, {$userName}. Use este link para redefinir sua senha: {$resetLink}. Se não foi você, ignore este e-mail.";
 
     $mail->send();
-    echo 'E-mail enviado com sucesso!';
+    return ['status' => 'sucesso', 'mensagem' => 'E-mail enviado com sucesso!'];
 } catch (Exception $e) {
-    echo "Falha no envio do e-mail. Erro: {$mail->ErrorInfo}";
+    return ['status' => 'erro', 'mensagem' => 'Falha no envio do e-mail. Erro: ' . $mail->ErrorInfo];
 }
 }
