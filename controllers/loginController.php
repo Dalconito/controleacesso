@@ -16,7 +16,7 @@ if ($loginUser && $senhaUser) {
     if ($result) {
         if ($loginUser == $result['loginusr']) {
             if ($senhaUser == $result['senha']) {
-                $_SESSION['tipoUsr'] = ($result['tipo_conta'] == 1) ? 'admin' : 'comum';
+                $_SESSION['tipoUsr'] = ($result['tipo_conta'] == 2) ? 'admin' : 'comum';
                 $response = ["status" => "success", "message" => "Login bem-sucedido."];
             } else {
                 $response = ["status" => "020", "message" => "Senha incorreta"];

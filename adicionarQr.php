@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./public/css/adicionarQr.css">
 </head>
 <body>
+    <?php require "./templates/menu.php"; ?>
+<div class="pagina">
     <form method="post">
         <label for="nomeC">Nome Completo</label>
         <input type="text" name="nomeC" id="nomeC" required>
@@ -24,6 +26,7 @@
         <input type="submit" value="Adicionar">
         <div id="errorMessage"></div>
     </form>
+    </div>
     <script src="./public/js/adicionarQr.js" defer></script>
 </body>
 

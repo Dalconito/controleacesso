@@ -1,3 +1,26 @@
+function logout() {
+    const dataToSend = {
+        cpf: '12345678901',
+        email: 'exemplo@email.com'
+    };
+    
+    fetch("./controllers/adcController.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),  // Converte os dados para JSON antes de enviar
+    })
+    .then(response => response.json())  // Converte a resposta para JSON
+    .then(result => {
+        console.log('Sucesso:', result);  // Processa a resposta
+    })
+    .catch(error => {
+        console.error('Erro:', error);  // Exibe erros
+    });
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     const nomeC = document.getElementById('nomeC');

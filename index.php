@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_SESSION['tipoUsr'])){
+    header("location: ./adicionarQr.php");
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +14,7 @@
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <body>
+    <?php require_once "./templates/menu.php"; ?>
     <div class="login-container">
         <form id="loginForm" method="post">
             <h2>Login</h2>
