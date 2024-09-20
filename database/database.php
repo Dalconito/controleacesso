@@ -1,4 +1,5 @@
 <?php 
+
 function connectDb(){
     $host = "webdecision.mysql.uhserver.com";
     $user = "dalconito";
@@ -39,3 +40,4 @@ function selectUser($postData){
     $query->close(); $conn->close();
     return $resultQuery;
 }
+
