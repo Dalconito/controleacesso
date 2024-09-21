@@ -41,3 +41,27 @@ function selectUser($postData){
     return $resultQuery;
 }
 
+function selectUserDash($postData){
+
+    $conn = connectDb();
+    $selectDbQuery = "SELECT * FROM usuarios WHERE loginusr=? ";
+    $query = $conn->prepare($selectDbQuery);
+    $query->close(); $conn->close();
+
+    if($query === false){    echo json_encode([
+        'status' => 'error',
+        'message' => 'Nenhum dado foi enviado'
+    ]);}
+
+    $query->bind_param("s", $postData);
+    header('Content-Type: application/json');
+    if($query->execute()){
+        $resultDbQuery = $query->get_result();
+        $resultQuery = $resultDbQuery->fetch_assoc();
+    }
+    else {echo json_encode([
+        'status' => 'error',
+        'message' => 'selecao com problema'
+    ]);}
+    return $resultQuery;
+}

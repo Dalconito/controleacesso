@@ -1,8 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['tipoUsr'])){
-    header("location: ./adicionarQr.php");
-    
+    header("location: ./dashboard.php");
 }
 ?>
 <!DOCTYPE html>

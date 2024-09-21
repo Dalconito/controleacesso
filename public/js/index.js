@@ -24,7 +24,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === "success") {
                     document.getElementById('loader').style.display = 'none';
-                    window.location.href = "./adicionarQr.php"; // Substitua pela URL correta
+                    window.location.href = "./dashboard.php"; // Substitua pela URL correta
                 } else {
                     console.log(xhr.responseText);
                     document.getElementById('loader').style.display = 'none';
