@@ -74,7 +74,6 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
         !$qrExistente => "QrCode Existente",
         !$pedidoStatus => "TUDO ERRADO",
     };
-    
     echo $resMatch;
     //enviarResp("400", $resMatch);
     
@@ -87,7 +86,13 @@ function selectPorCpf($cpf){
     foreach($data as $varredura){
         if($varredura['cliente']['doc1'] == $cpf)
         {
-            array_push($dataAppend, $varredura['id'], );
+            $dataAppend[] = [
+                'cpf' => $varredura['cliente']['doc1'],
+                'nome' => $varredura['cliente']['nome'],
+                'status' => $varredura['status']['id'],
+                'qtde' => $varredura['produtos'][0]['qtd'],
+                'ingresso' => $varredura['id']
+            ];
         }
     }
     if(empty($dataAppend)){

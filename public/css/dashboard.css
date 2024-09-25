@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+/* Tabela de status: Inicialmente neutra */
+.status {
+    background-color: #fff3cd; /* Amarelo claro padrão */
+}
+
+button, input[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #555;
+}
+
+form {
+    width: 60%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Form inline para campo de texto e botão de "Gerar QrCode" */
+#form-gerar-qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+input[type="text"]#idIngresso {
+    width: 60%; /* Campo de texto reduzido para caber com o botão */
+}
+
+input[type="submit"]#btnGerarQrCode {
+    margin-left: 10px; /* Espaço entre campo de texto e botão */
+}
+
+.status-9 {
+    background-color: green; /* Verde para status 9 */
+}
+
+.status-other {
+    background-color: #fff3cd; /* Amarelo claro para outros status */
+}

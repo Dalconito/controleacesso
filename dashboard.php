@@ -4,9 +4,8 @@ require_once "./controllers/dashboardController.php";
 require_once "./controllers/verificaAPI.php";
 $loginSession = $_SESSION['login'];
 $cpfSession = $_SESSION['cpf'];
-if(isset($_POST)){
+if (isset($_POST)) {
     $selectIngressos = selectPorCpf($cpfSession);
-
 }
 ?>
 <!DOCTYPE html>
@@ -15,16 +14,15 @@ if(isset($_POST)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="./public/css/dashboard.css">
 </head>
 <body>
     <?php require_once "./templates/menu.php"; ?>
     <h1>Olá <?php echo $loginSession ?></h1>
-    <button id="botaoEnvia">Enviar Dados</button>
 
     <form method="post">
-        <label for="idIngresso" id="idIngresso">Digite o numero do Pedido sem a Hashtag</label>
+        <label for="idIngresso" id="idIngresso">Digite o número do Pedido sem a Hashtag</label>
         <input type="text" name="idIngresso" >
-
         <input type="submit" value="Gerar QrCode">
     </form>
     <form id="gerarQrCode">
@@ -32,24 +30,30 @@ if(isset($_POST)){
         <input type="submit" value="Exibir QrCode">
     </form>
 
-    <?php
-        foreach($selectIngressos as $key){ ?>
+    <table>
         <tr>
-            <td>Ingresso n°: <?php var_dump($key) ?></td>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Quantidade</th>
+            <th>ID</th>
         </tr>
-    <?php }?>
+
+        <?php if (isset($selectIngressos) && !empty($selectIngressos)) {
+            foreach ($selectIngressos as $abc) { 
+                // Define a classe para o status
+                $statusClass = ($abc['status'] == 9) ? 'status-9' : 'status-other'; ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($abc['nome']); ?></td>
+                    <td class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($abc['status']); ?></td>
+                    <td><?php echo htmlspecialchars($abc['qtde']); ?></td>
+                    <td><?php echo htmlspecialchars($abc['ingresso']); ?></td>
+                </tr>
+        <?php } } else { ?>
+            <tr>
+                <td colspan="4">Nenhum dado a ser mostrado</td>
+            </tr>
+        <?php } ?>
+    </table>
     <script src="./public/js/dashboard.js" defer></script>
 </body>
 </html>
-<?php
-    //captura os dados via post
-    /*$postData = isset($_POST) ? $_POST : null;  
-    if(isset($_POST['idIngresso'])){
-        $stringHash = $loginSession . $cpfSession . $postData['idIngresso'];
-        $idIngresso = $postData['idIngresso'];
-        $secretKey = "fabricad";
-        $criptografado = hash_hmac("sha256", $stringHash, $secretKey);
-        if($criptografado != null) {verificarIntegridade($cpfSession, $criptografado, $idIngresso);}
-    }*/
-
-?>

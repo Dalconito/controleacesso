@@ -1,3 +1,17 @@
+document.querySelectorAll('td.status').forEach(function (cell) {
+    let status = parseInt(cell.textContent); // Converte o conteúdo para número
+    if (status === 9) {
+        cell.style.backgroundColor = '#d4edda'; // Verde para status 9
+    } else {
+        cell.style.backgroundColor = '#fff3cd'; // Amarelo claro para outros status
+    }
+});
+
+// Adiciona interação ao botão "Enviar Dados"
+document.getElementById('botaoEnvia').addEventListener('click', function() {
+    alert('Dados enviados com sucesso!');
+});
+
 async function logout() {
     const data = {"data":"logout"}
     try {
