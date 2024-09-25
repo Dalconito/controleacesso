@@ -3,7 +3,7 @@ require_once "./altSenhacontroller.php";
 
 session_start();
 $dataPost = json_decode(file_get_contents("php://input"), true);
-$login = $_SESSION['login'];
+
 header('Content-Type: application/json');
 
 if (empty($dataPost)) {

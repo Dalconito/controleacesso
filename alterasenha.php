@@ -1,6 +1,7 @@
 <?php 
 session_start();
-
+$getContent = $_GET['email'] ?? null;
+require_once __DIR__ . "/controllers/SenhaController.php";
  ?>
 <!DOCTYPE html>
 <html lang="pt-br">

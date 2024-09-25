@@ -24,7 +24,7 @@ try {
     $mail->addAddress($email, $userName);
 
     $token = bin2hex(random_bytes(50));  // Gera um token seguro
-    $resetLink = "https://192.168.3.35/testes/alterasenha.php?token=" . $token;
+    $resetLink = "https://192.168.235.117/testes/alterasenha.php?email=" . $email;
     // Conteúdo do e-mail
     $mail->isHTML(true);
     $mail->Subject = 'Recuperação de Senha';
