@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault(); // Prevent default form submission for validation
-        
+
         const msgUser = document.getElementById('msgUsr');
         const cpfValue = cpf.value;
         const nomeValue = nomeC.value;

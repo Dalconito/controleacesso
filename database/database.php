@@ -44,17 +44,17 @@ function selectUser($postData){
 function selectUserDash($postData){
 
     $conn = connectDb();
-    $selectDbQuery = "SELECT * FROM usuarios WHERE loginusr=? ";
-    $query = $conn->prepare($selectDbQuery);
-    $query->close(); $conn->close();
+    $selectDbQuery =    "SELECT * FROM usuarios WHERE loginusr=? ;";
 
+    $query = $conn->prepare($selectDbQuery);
+    header('Content-Type: application/json');
+    
     if($query === false){    echo json_encode([
         'status' => 'error',
         'message' => 'Nenhum dado foi enviado'
     ]);}
-
+    
     $query->bind_param("s", $postData);
-    header('Content-Type: application/json');
     if($query->execute()){
         $resultDbQuery = $query->get_result();
         $resultQuery = $resultDbQuery->fetch_assoc();
@@ -63,5 +63,6 @@ function selectUserDash($postData){
         'status' => 'error',
         'message' => 'selecao com problema'
     ]);}
+    $query->close(); $conn->close();
     return $resultQuery;
 }

@@ -79,3 +79,19 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
     //enviarResp("400", $resMatch);
     
 }
+
+function selectPorCpf($cpf){
+    $dataApi = getApi();
+    $data = $dataApi['data'];
+    $dataAppend = [];
+    foreach($data as $varredura){
+        if($varredura['cliente']['doc1'] == $cpf)
+        {
+            array_push($dataAppend, $varredura['id'], );
+        }
+    }
+    if(empty($dataAppend)){
+        echo "nenhum dado a ser mostrado";
+    }
+    else{return $dataAppend;}
+}
