@@ -1,6 +1,5 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-require './vendor/autoload.php';
+    $idIngresso = $_GET['idIngresso'] ?? null;
+    $cpfC = $_GET['cpf'] ?? null;
 
-$mail = new PHPMailer(true);
-echo "PHPMailer carregado com sucesso!";
+    echo'Ingresso'. $idIngresso .'CPf'. $cpfC .'FOdeu';

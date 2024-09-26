@@ -7,10 +7,6 @@ document.querySelectorAll('td.status').forEach(function (cell) {
     }
 });
 
-// Adiciona interação ao botão "Enviar Dados"
-document.getElementById('botaoEnvia').addEventListener('click', function() {
-    alert('Dados enviados com sucesso!');
-});
 
 async function logout() {
     const data = {"data":"logout"}
@@ -36,20 +32,35 @@ async function logout() {
     }
 }
 
-document.getElementById('botaoEnvia').addEventListener('click', async () => {
-    var dataPost = {'novaSenha': "confirmaSenha"};
+async function selecionar(botao, cpf){
+    let linha = botao.parentElement.parentElement
+    let nome = linha.cells[0].innerText;
+    let ingressoId = linha.cells[3].innerText;
+    let data = {cpf: cpf, ingressoId: ingressoId}
+    console.log("nome ", nome, "ingresso ", ingressoId, "cpf ", cpf)
 
-    try {
-        const response = await fetch('./controllers/dashboardController.php', {
+    try{
+        const response = await fetch('./controllers/generate.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(dataPost)
-        });
+            body: JSON.stringify(data)})
 
-        const data = await response.json();
+        const result = await response.json()
 
-        console.log(data);
-    } catch (error) {
-        console.error('ERROU AQUI', error);
-    }
-});
+        if (result.success) {
+            // Cria um elemento de imagem e define a fonte como a string base64
+            const img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + result.qrCodeImage;
+            img.alt = 'QR Code';
+            
+            // Limpa o resultado anterior e adiciona a nova imagem
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = ''; // Limpa o conteúdo anterior
+            resultadoDiv.appendChild(img);
+        } else {
+            alert(data.message); // Mostra a mensagem de erro
+        }
+    }catch(error) {
+        console.error('Erro:', error);
+    };
+}

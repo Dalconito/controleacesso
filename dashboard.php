@@ -36,10 +36,11 @@ if (isset($_POST)) {
             <th>Status</th>
             <th>Quantidade</th>
             <th>ID</th>
+            <th>Ações</th>
         </tr>
 
         <?php if (isset($selectIngressos) && !empty($selectIngressos)) {
-            foreach ($selectIngressos as $abc) { 
+            foreach ($selectIngressos as $abc) {
                 // Define a classe para o status
                 $statusClass = ($abc['status'] == 9) ? 'status-9' : 'status-other'; ?>
                 <tr>
@@ -47,6 +48,10 @@ if (isset($_POST)) {
                     <td class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($abc['status']); ?></td>
                     <td><?php echo htmlspecialchars($abc['qtde']); ?></td>
                     <td><?php echo htmlspecialchars($abc['ingresso']); ?></td>
+                    <td>
+                        <button onclick="selecionar(this, '<?php echo $cpfSession;?>')">Exibir QrCode</button>
+                        <a href="./adicionarAutQr.php?<?php echo "cpf=" . $cpfSession . "&idIngresso=" . $abc['ingresso']?>" >ADICIONAR QRCODE</a>
+                    </td>
                 </tr>
         <?php } } else { ?>
             <tr>
@@ -54,6 +59,7 @@ if (isset($_POST)) {
             </tr>
         <?php } ?>
     </table>
+    <div id="resultado"></div>
     <script src="./public/js/dashboard.js" defer></script>
 </body>
 </html>

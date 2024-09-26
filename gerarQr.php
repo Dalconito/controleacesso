@@ -8,15 +8,12 @@
 </head>
 <body>
     <form method="post">
-        <label for="idQrCode">Informe o ID</label>
-        <input type="number" id="idQrCode" name="idQrCode">
-
-        <button type="Mostrar QrCode"></button>
+        <button type="Gerar QrCode"></button>
     </form>    
 
 <?php
     require_once "./controllers/geradorQrcode.php";
-    $idQrCode = isset($_POST['idQrCode']) ? $_POST['idQrCode'] : null;
+    $idQrCode = isset($_GET['idQrCode']) ? $_POST['idQrCode'] : null;
     $resultQuery = isset($_POST['idQrCode'])  ? Query($idQrCode) : null;
 
     if($resultQuery != null)
