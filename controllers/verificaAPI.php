@@ -41,7 +41,7 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
     foreach ($data as $varredura){
         if ($varredura['cliente']['doc1'] == $cpfUser){
             $boolcpf = true;
-            if($varredura['status']['id'] != 9)
+            if($varredura['status']['id'] != 1)
                 {$boolStatus = false;}
             else{
                     $select = select($qrCodeId);
@@ -62,19 +62,30 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
             
         }
     }
-    $resMatch = match (true) {
-        !$boolQrCode && !$boolStatus && !$boolcpf => "Verifique os dados e tente novamente",
-        !$boolQrCode && !$boolStatus => "Id e Status com Erro",
-        !$boolQrCode && !$boolcpf => "Id e Cpf com Erro",
-        !$boolStatus && !$boolcpf => "Status e Cpf com Problema",
-        !$boolQrCode => "Id com Erro",
-        $adcQr => "Adicionando QrCode",
-        !$boolStatus => "Status com Erro",
-        !$boolcpf => "Cpf com Erro",
-        !$qrExistente => "QrCode Existente",
-        !$pedidoStatus => "TUDO ERRADO",
-    };
+    if (!$boolQrCode && !$boolStatus && !$boolcpf) {
+        $resMatch = "Verifique os dados e tente novamente";
+    } elseif (!$boolQrCode && !$boolStatus) {
+        $resMatch = "Id e Status com Erro";
+    } elseif (!$boolQrCode && !$boolcpf) {
+        $resMatch = "Id e Cpf com Erro";
+    } elseif (!$boolStatus && !$boolcpf) {
+        $resMatch = "Status e Cpf com Problema";
+    } elseif (!$boolQrCode) {
+        $resMatch = "Id com Erro";
+    } elseif ($adcQr) {
+        $resMatch = "Adicionando QrCode";
+    } elseif (!$boolStatus) {
+        $resMatch = "Status com Erro";
+    } elseif (!$boolcpf) {
+        $resMatch = "Cpf com Erro";
+    } elseif (!$qrExistente) {
+        $resMatch = "QrCode Existente";
+    } elseif (!$pedidoStatus) {
+        $resMatch = "TUDO ERRADO";
+    }
+    
     echo $resMatch;
+    
     //enviarResp("400", $resMatch);
     
 }
