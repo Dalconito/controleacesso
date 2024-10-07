@@ -51,7 +51,7 @@ if (isset($_POST)) {
                     <td>
                         <button onclick="selecionar(this, '<?php echo $cpfSession;?>')">Exibir QrCode</button>
                         <a href="./adicionarAutQr.php?<?php echo "cpf=" . $cpfSession . "&idIngresso=" . $ingressos['ingresso']?>" >ADICIONAR QRCODE</a>
-                        <button onclick="exibindo('<?php echo $cpfSession; ?>', '<?php $ingressos['ingresso']; ?>')">Exibir Teste</button>
+                        <button onclick="exibindo('<?php echo $cpfSession; ?>', '<?php echo $ingressos['ingresso']; ?>')">Exibir Teste</button>
                     </td>
                 </tr>
         <?php } } else { ?>

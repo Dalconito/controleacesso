@@ -67,7 +67,7 @@ async function selecionar(botao, cpf){
 
 async function exibindo(cpf, ingressos){
     var resultadoDiv = document.getElementById('resultado')
-    let data = {cpf: cpf, ingresso:ingressos}
+    let data = {cpfPost: cpf, ingressoPost:ingressos}
     try{
     const response  = await fetch ('./controllers/qrDashboard.php', {
         method: 'POST',
@@ -82,6 +82,6 @@ async function exibindo(cpf, ingressos){
     else{alert("Erro ao capturar dados, tente mais tarde")}
     }
     catch(error){
-
+        console.error("OLHA A MERDA", error)
     }
 }

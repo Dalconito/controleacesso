@@ -41,7 +41,7 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
     foreach ($data as $varredura){
         if ($varredura['cliente']['doc1'] == $cpfUser){
             $boolcpf = true;
-            if($varredura['status']['id'] != 1)
+            if($varredura['status']['id'] != 9)
                 {$boolStatus = false;}
             else{
                     $select = select($qrCodeId);
@@ -84,7 +84,7 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
         $resMatch = "TUDO ERRADO";
     }
     
-    echo $resMatch;
+    //echo $resMatch;
     
     //enviarResp("400", $resMatch);
     
