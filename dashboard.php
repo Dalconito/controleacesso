@@ -40,17 +40,18 @@ if (isset($_POST)) {
         </tr>
 
         <?php if (isset($selectIngressos) && !empty($selectIngressos)) {
-            foreach ($selectIngressos as $abc) {
+            foreach ($selectIngressos as $ingressos) {
                 // Define a classe para o status
-                $statusClass = ($abc['status'] == 9) ? 'status-9' : 'status-other'; ?>
+                $statusClass = ($ingressos['status'] == 9) ? 'status-9' : 'status-other'; ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($abc['nome']); ?></td>
-                    <td class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($abc['status']); ?></td>
-                    <td><?php echo htmlspecialchars($abc['qtde']); ?></td>
-                    <td><?php echo htmlspecialchars($abc['ingresso']); ?></td>
+                    <td><?php echo htmlspecialchars($ingressos['nome']); ?></td>
+                    <td class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($ingressos['status']); ?></td>
+                    <td><?php echo htmlspecialchars($ingressos['qtde']); ?></td>
+                    <td><?php echo htmlspecialchars($ingressos['ingresso']); ?></td>
                     <td>
                         <button onclick="selecionar(this, '<?php echo $cpfSession;?>')">Exibir QrCode</button>
-                        <a href="./adicionarAutQr.php?<?php echo "cpf=" . $cpfSession . "&idIngresso=" . $abc['ingresso']?>" >ADICIONAR QRCODE</a>
+                        <a href="./adicionarAutQr.php?<?php echo "cpf=" . $cpfSession . "&idIngresso=" . $ingressos['ingresso']?>" >ADICIONAR QRCODE</a>
+                        <button onclick="exibindo('<?php echo $cpfSession; ?>', '<?php $ingressos['ingresso']; ?>')">Exibir Teste</button>
                     </td>
                 </tr>
         <?php } } else { ?>

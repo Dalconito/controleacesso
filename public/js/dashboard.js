@@ -64,3 +64,24 @@ async function selecionar(botao, cpf){
         console.error('Erro:', error);
     };
 }
+
+async function exibindo(cpf, ingressos){
+    var resultadoDiv = document.getElementById('resultado')
+    let data = {cpf: cpf, ingresso:ingressos}
+    try{
+    const response  = await fetch ('./controllers/qrDashboard.php', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)})
+
+    const result = await response.json()
+
+    if (result.status){
+        resultadoDiv.textContent = result.message
+    }
+    else{alert("Erro ao capturar dados, tente mais tarde")}
+    }
+    catch(error){
+
+    }
+}
