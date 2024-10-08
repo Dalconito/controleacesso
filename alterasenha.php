@@ -1,7 +1,6 @@
 <?php 
 session_start();
-$getContent = $_GET['email'] ?? null;
-require_once __DIR__ . "/controllers/SenhaController.php";
+$getEmail = $_GET['email'] ?? null;
  ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,13 +14,12 @@ require_once __DIR__ . "/controllers/SenhaController.php";
     <div class="container">
         <h2>Alteração de Senha</h2>
         <p>Por favor, insira a nova senha.</p>
-            <input type="text" id="novaSenha" name="cnovaSenhapf" maxlength="14" placeholder="Digite sua nova senha" required>
-            
+            <input type="text" id="novaSenha" name="novaSenha" maxlength="14" placeholder="Digite sua nova senha" required>
             <input type="text" id="confirmaSenha" name="confirmaSenha" placeholder="Insira novamente" required>
-            
-            <button type="submit" id="botao">CLICA AQUI</button>
+            <button type="submit" id="botao" onclick="validar('<?php echo $getEmail ?>')">Clica ai po</button>
         <p id="mensagemErro" class="mensagem-erro"></p>
     </div>
+
     <script src="./public/js/alterasenha.js" defer></script>
 </body>
 </html>

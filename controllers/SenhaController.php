@@ -1,7 +1,6 @@
 <?php
-require_once "./altSenhacontroller.php";
+require_once __DIR__ ."/altSenhacontroller.php";
 
-session_start();
 $dataPost = json_decode(file_get_contents("php://input"), true);
 
 header('Content-Type: application/json');

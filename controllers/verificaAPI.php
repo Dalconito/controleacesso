@@ -1,6 +1,6 @@
 <?php
-require_once (__DIR__. "/CEQr.php");
-require_once (__DIR__. "/../database/database.php" );
+require_once __DIR__. "/CEQr.php";
+require_once __DIR__. "/../database/database.php";
 
 
 function enviarResp($status, $message){
@@ -53,8 +53,20 @@ function verificarIntegridade($cpfUser, $qrCodeId, $idIngresso){
                             $idEvento = $varredura['produtos'][0]['produto_id'];
                             
                             createQrCode($qrCodeId, $idIngresso, $cpfUser, $qtde, $idEvento);
+                            ob_start();
+                            QRcode::png($qrCodeId, null, QR_ECLEVEL_L, 10);
+                            $imageString = base64_encode(ob_get_contents());
+                            ob_end_clean();
+                    
+                            // Retorna o QR Code em formato base64 como JSON
+                            echo json_encode([
+                                'status' => true,
+                                'qrcode' => true,
+                                'qrCodeImage' => $imageString
+                            ]);
                             $boolcpf = true; $boolStatus = true; $boolQrCode = true; 
                             $qrExistente = true; $adcQr = true;
+                            exit();
                         }
                         else $pedidoStatus = true;
                     }

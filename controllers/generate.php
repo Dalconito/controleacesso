@@ -39,4 +39,3 @@ if ($idIngresso !== null && $cpf !== null) {
         'message' => 'Dados inválidos.'
     ]);
 }
-?>

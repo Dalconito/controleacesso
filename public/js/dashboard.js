@@ -32,42 +32,26 @@ async function logout() {
     }
 }
 
-async function selecionar(botao, cpf){
-    let linha = botao.parentElement.parentElement
-    let nome = linha.cells[0].innerText;
-    let ingressoId = linha.cells[3].innerText;
-    let data = {cpf: cpf, ingressoId: ingressoId}
-    console.log("nome ", nome, "ingresso ", ingressoId, "cpf ", cpf)
-
-    try{
-        const response = await fetch('./controllers/generate.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)})
-
-        const result = await response.json()
-
-        if (result.success) {
-            // Cria um elemento de imagem e define a fonte como a string base64
-            const img = document.createElement('img');
-            img.src = 'data:image/png;base64,' + result.qrCodeImage;
-            img.alt = 'QR Code';
-            
-            // Limpa o resultado anterior e adiciona a nova imagem
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = ''; // Limpa o conteúdo anterior
-            resultadoDiv.appendChild(img);
-        } else {
-            alert(data.message); // Mostra a mensagem de erro
-        }
-    }catch(error) {
-        console.error('Erro:', error);
-    };
-}
-
-async function exibindo(cpf, ingressos){
+async function exibindo(button, cpf, ingressos){
     var resultadoDiv = document.getElementById('resultado')
     let data = {cpfPost: cpf, ingressoPost:ingressos}
+    
+
+    const row = button.closest('tr');
+    
+    // Pega o valor do <td> de status que está na mesma linha
+    const statusCell = row.querySelector('td[class^="status-"]');
+    const statusValue = statusCell.textContent.trim(); // Pega o valor do status
+    
+    // Verifica o valor do status
+    if (statusValue != '9') {
+        alert("NAO PAGOU NEKKKKKK");
+    } else {
+
+
+
+
+
     try{
     const response  = await fetch ('./controllers/qrDashboard.php', {
         method: 'POST',
@@ -77,11 +61,24 @@ async function exibindo(cpf, ingressos){
     const result = await response.json()
 
     if (result.status){
-        resultadoDiv.textContent = result.message
+        if(result.qrcode)
+        {
+            const img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + result.qrCodeImage;
+            img.alt = 'QR Code';
+            
+            // Limpa o resultado anterior e adiciona a nova imagem
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = ''; // Limpa o conteúdo anterior
+            resultadoDiv.appendChild(img);
+        }else{
+            resultadoDiv.textContent = result.message
+        }
     }
-    else{alert("Erro ao capturar dados, tente mais tarde")}
+    else{resultadoDiv.textContent = "Erro ao Exibir o QrCode, verifique o status do Ingresso"}
     }
     catch(error){
         console.error("OLHA A MERDA", error)
     }
+}
 }

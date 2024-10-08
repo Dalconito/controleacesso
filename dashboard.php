@@ -20,16 +20,6 @@ if (isset($_POST)) {
     <?php require_once "./templates/menu.php"; ?>
     <h1>Olá <?php echo $loginSession ?></h1>
 
-    <form method="post">
-        <label for="idIngresso" id="idIngresso">Digite o número do Pedido sem a Hashtag</label>
-        <input type="text" name="idIngresso" >
-        <input type="submit" value="Gerar QrCode">
-    </form>
-    <form id="gerarQrCode">
-        <label>Confira os QrCode existentes</label>
-        <input type="submit" value="Exibir QrCode">
-    </form>
-
     <table>
         <tr>
             <th>Nome</th>
@@ -49,9 +39,7 @@ if (isset($_POST)) {
                     <td><?php echo htmlspecialchars($ingressos['qtde']); ?></td>
                     <td><?php echo htmlspecialchars($ingressos['ingresso']); ?></td>
                     <td>
-                        <button onclick="selecionar(this, '<?php echo $cpfSession;?>')">Exibir QrCode</button>
-                        <a href="./adicionarAutQr.php?<?php echo "cpf=" . $cpfSession . "&idIngresso=" . $ingressos['ingresso']?>" >ADICIONAR QRCODE</a>
-                        <button onclick="exibindo('<?php echo $cpfSession; ?>', '<?php echo $ingressos['ingresso']; ?>')">Exibir Teste</button>
+                        <button onclick="exibindo(this, '<?php echo $cpfSession; ?>', '<?php echo $ingressos['ingresso']; ?>')">Exibir QrCode</button>
                     </td>
                 </tr>
         <?php } } else { ?>
