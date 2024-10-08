@@ -13,7 +13,6 @@ if(isset($_SESSION['tipoUsr'])){
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <body>
-    <button class="menu-btn" onclick="openMenu()">☰</button>
     
     <!-- Menu lateral direito -->
     <div id="sideMenu" class="side-menu">

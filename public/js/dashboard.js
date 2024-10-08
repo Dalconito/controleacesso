@@ -45,7 +45,7 @@ async function exibindo(button, cpf, ingressos){
     
     // Verifica o valor do status
     if (statusValue != '9') {
-        alert("NAO PAGOU NEKKKKKK");
+        alert("Verifique se o Ingresso esta Disponivel");
     } else {
 
 

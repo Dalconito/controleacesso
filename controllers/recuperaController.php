@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/sendEmail.php"); // Corrigido o caminho
+require_once __DIR__ . "/sendEmail.php";
 require_once __DIR__ . "/../database/database.php";
 
 header('Content-Type: application/json');
@@ -39,8 +39,17 @@ $handler = fopen($logFile, 'a');
 fwrite($handler, "CPF: $cpf, E-mail: $email\n");
 fclose($handler);
 
-// Chama a função recuperaSenha
-recuperaSenha($cpf, $email);
+$selectCpf = selectCpfDb($cpf);
+//verifica se existe o cpf
+if($selectCpf['cpf'] != $cpf){
 
-// Envia uma resposta de sucesso
-echo json_encode(['status' => 'sucesso', 'mensagem' => 'Dados recebidos com sucesso!', 'dados' => $data]);
+    echo json_encode(['status' => 'error', 'mensagem' => 'Cpf nao cadastrado', 'dados' => $data]);
+    exit();
+}else{
+    // Chama a função recuperaSenha
+    recuperaSenha($cpf, $email);
+
+    // Envia uma resposta de sucesso
+    echo json_encode(['status' => 'sucesso', 'mensagem' => 'Dados recebidos com sucesso!', 'dados' => $data]);
+    exit();
+}

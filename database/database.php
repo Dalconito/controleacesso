@@ -41,28 +41,12 @@ function selectUser($postData){
     return $resultQuery;
 }
 
-function selectUserDash($postData){
 
+function selectCpfDb($cpf){
     $conn = connectDb();
-    $selectDbQuery =    "SELECT * FROM usuarios WHERE loginusr=? ;";
-
-    $query = $conn->prepare($selectDbQuery);
-    header('Content-Type: application/json');
-    
-    if($query === false){    echo json_encode([
-        'status' => 'error',
-        'message' => 'Nenhum dado foi enviado'
-    ]);}
-    
-    $query->bind_param("s", $postData);
-    if($query->execute()){
-        $resultDbQuery = $query->get_result();
-        $resultQuery = $resultDbQuery->fetch_assoc();
-    }
-    else {echo json_encode([
-        'status' => 'error',
-        'message' => 'selecao com problema'
-    ]);}
-    $query->close(); $conn->close();
+    $selectDbQuery = "SELECT cpf FROM usuarios WHERE cpf= '$cpf' ";
+    $resultDbQuery = mysqli_query($conn, $selectDbQuery);
+    $resultQuery = mysqli_fetch_assoc($resultDbQuery);
+    $conn->close();
     return $resultQuery;
 }

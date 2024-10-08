@@ -16,7 +16,7 @@
                 <label for="login">Login</label>
             </div>
             <div class="input-group">
-                <input type="text" id="cpf" name="cpf" required>
+                <input type="text" id="cpf" name="cpf" oninput="formatarCPF(this)" required>
                 <label for="cpf">CPF</label>
             </div>
             <div class="input-group">
@@ -41,7 +41,7 @@
         </form>
     </div>
 
-    <script src="./public/js/index.js"></script>
+    <script src="./public/js/index.js" defer></script>
 </body>
 </html>
 
