@@ -3,12 +3,11 @@ document.getElementById('recuperacaoForm').addEventListener('submit', async func
 
     const cpf = document.getElementById('cpf').value;
     const email = document.getElementById('email').value;
-
     // Cria o objeto de dados
     const data = {
         cpf: cpf,
         email: email
-    };
+        };
 
     try {
         const response = await fetch('./controllers/recuperaController.php', {

@@ -26,6 +26,7 @@ if ($data === null) {
 // Processa os dados recebidos
 $cpf = $data['cpf'] ?? '';
 $email = $data['email'] ?? '';
+$login = $data['login'] ?? '';
 
 // Simples validação
 if (empty($cpf) || empty($email)) {
@@ -39,17 +40,22 @@ $handler = fopen($logFile, 'a');
 fwrite($handler, "CPF: $cpf, E-mail: $email\n");
 fclose($handler);
 
-$selectCpf = selectCpfDb($cpf);
-//verifica se existe o cpf
-if($selectCpf['cpf'] != $cpf){
 
-    echo json_encode(['status' => 'error', 'mensagem' => 'Cpf nao cadastrado', 'dados' => $data]);
+$selectCpf = selectCpfDb($cpf);
+$cpfBase = $selectCpf['cpf'] ?? '';
+$emailBase = $selectCpf['email'] ?? '';
+
+if(!$selectCpf){
+    echo json_encode( ['status' => 'error', 'mensagem' => 'Cpf não cadastrado']);
     exit();
 }else{
-    // Chama a função recuperaSenha
-    recuperaSenha($cpf, $email);
-
-    // Envia uma resposta de sucesso
-    echo json_encode(['status' => 'sucesso', 'mensagem' => 'Dados recebidos com sucesso!', 'dados' => $data]);
-    exit();
+    if($cpfBase == $cpf and $emailBase == $email)
+    {
+        recuperaSenha($login, $email);
+        echo json_encode(['status' => 'sucesso', 'mensagem' => 'Dados recebidos com sucesso!']);
+        exit();
+    }else{
+        echo json_encode(['status' => 'error', 'mensagem' => 'CPF e Email Digitado não combinam']);
+        exit();
+    }
 }

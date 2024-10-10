@@ -48,10 +48,6 @@ async function exibindo(button, cpf, ingressos){
         alert("Verifique se o Ingresso esta Disponivel");
     } else {
 
-
-
-
-
     try{
     const response  = await fetch ('./controllers/qrDashboard.php', {
         method: 'POST',

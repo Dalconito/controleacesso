@@ -44,7 +44,7 @@ function selectUser($postData){
 
 function selectCpfDb($cpf){
     $conn = connectDb();
-    $selectDbQuery = "SELECT cpf FROM usuarios WHERE cpf= '$cpf' ";
+    $selectDbQuery = "SELECT * FROM usuarios WHERE cpf= '$cpf' ";
     $resultDbQuery = mysqli_query($conn, $selectDbQuery);
     $resultQuery = mysqli_fetch_assoc($resultDbQuery);
     $conn->close();

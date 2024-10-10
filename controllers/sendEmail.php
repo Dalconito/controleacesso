@@ -30,16 +30,16 @@ try {
     $mail->Subject = 'Recuperação de Senha';
     $mail->Body    = "
         <h1>Recuperação de Senha</h1>
-        <p>Olá, <strong>{$userName}</strong>.</p>
+        <p>Olá.</p>
         <p>Recebemos um pedido para redefinir sua senha. Se foi você, clique no link abaixo para redefinir sua senha:</p>
         <p><a href='{$resetLink}'>Clique aqui para redefinir sua senha</a></p>
         <br>
         <p>Se você não solicitou a redefinição de senha, ignore este e-mail. Alguém pode estar tentando acessar sua conta indevidamente.</p>
         <p>Por favor, não compartilhe este link com ninguém para evitar fraudes.</p>
         <br>
-        <p>Atenciosamente,<br>Sua Empresa</p>
+        <p>Atenciosamente,<br>Site da Fabrica</p>
     ";
-    $mail->AltBody = "Olá, {$userName}. Use este link para redefinir sua senha: {$resetLink}. Se não foi você, ignore este e-mail.";
+    $mail->AltBody = "Olá. Use este link para redefinir sua senha: {$resetLink}. Se não foi você, ignore este e-mail.";
 
     $mail->send();
     return ['status' => 'sucesso', 'mensagem' => 'E-mail enviado com sucesso!'];
