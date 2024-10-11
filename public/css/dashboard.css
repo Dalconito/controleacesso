@@ -84,3 +84,7 @@ input[type="submit"]#btnGerarQrCode {
 .status-other {
     background-color: #fff3cd; /* Amarelo claro para outros status */
 }
+
+#resultado{
+    text-align: center;
+}

@@ -1,27 +1,26 @@
+var linkQr = document.getElementById("linkqrCode");
 var btnValidar = document.getElementById("btnValidar");
-var html5QrCode;
+var html5QrCode; // Declare globalmente
 var xhr = new XMLHttpRequest();
 
 xhr.open("POST", "./controllers/dbTeste.php", true);
-xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 xhr.onload = () => {
     if (xhr.status >= 200 && xhr.status < 300) {
-        var response = JSON.parse(xhr.responseText);
-        alert(response.status + response.message);
-    } else {
-        alert("Erro ao comunicar com o servidor");
-    }
-};
+        var response = JSON.parse(xhr.responseText)
+        alert(response.status + response.message)
+    } else alert("NAO VEIO NADA")
+}
 
 function onScanSuccess(decodedText, decodedResult) {
-    document.getElementById("qrCodeParagh").style.display = "block";
+    // Parar a câmera após o sucesso
     enviarPost(decodedText);
-    // Para de ler após encontrar o QR Code
-    html5QrCode.stop().then(() => {
-        console.log("Scanner parado com sucesso.");
+    html5QrCode.stop().then(ignore => {
+        console.log("Câmera parada com sucesso.");
     }).catch(err => {
-        console.error("Erro ao parar o scanner: ", err);
+        console.error("Erro ao parar a câmera: ", err);
     });
+    
 }
 
 function onScanError(errorMessage) {
@@ -30,15 +29,34 @@ function onScanError(errorMessage) {
 
 function validar() {
     Html5Qrcode.getCameras().then(devices => {
-        // Selecionar a câmera padrão (por exemplo, a frontal)
-        const cameraId = devices[1].id; // Ou use devices[n] para outra câmera
+        if (devices && devices.length) {
+            // Cria um dropdown para escolher a câmera
+            let select = document.createElement('select');
+            devices.forEach((device, index) => {
+                let option = document.createElement('option');
+                option.value = device.id;
+                option.text = `Câmera ${index + 1}`;
+                select.appendChild(option);
+            });
 
-        html5QrCode = new Html5Qrcode("reader");
+            document.body.appendChild(select);
 
-        html5QrCode.start(cameraId,
-            { fps: 30, qrbox: 250 },
-            onScanSuccess, onScanError
-        );
+            // Quando o usuário seleciona a câmera
+            select.onchange = () => {
+                const cameraId = select.value;
+                html5QrCode = new Html5Qrcode("reader");
+
+                html5QrCode.start(
+                    cameraId,
+                    { fps: 30, qrbox: 250 },
+                    onScanSuccess,
+                    onScanError
+                );
+            };
+
+        } else {
+            console.error("Nenhuma câmera disponível.");
+        }
     }).catch(err => {
         console.error("Erro ao obter câmeras: ", err);
     });
@@ -50,7 +68,12 @@ function enviarPost(decodedText) {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
-            console.log(response);
+            if(response.status == "002"){
+                alert("Código Escaneado com sucesso")
+            }
+            else{
+                alert("Código ja Escaneado")
+            }
         }
     };
     var dados = "qrCode=" + encodeURIComponent(decodedText);

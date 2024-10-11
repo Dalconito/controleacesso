@@ -61,3 +61,26 @@
         background-color: #95a5a6;
         cursor: not-allowed;
     }
+
+    select {
+        padding: 15px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: 2px solid #4CAF50;
+        background-color: #f1f1f1;
+        color: #333;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    select:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    select:focus {
+        border-color: #45a049;
+        box-shadow: 0 0 10px rgba(0, 150, 0, 0.2);
+    }
+    
