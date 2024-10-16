@@ -1,4 +1,3 @@
-<?php require_once "./controllers/cadastroUsuarioController.php"; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,24 +23,80 @@
                 <label for="email">Email</label>
             </div>
             <div class="input-group">
-                <select name="tipo_grupo" id="tipo_grupo">
-                    <option value="1">Cliente</option>
-                    <option value="2">Lojista</option>
-                </select>
-                <label for="tipo_grupo">Tipo de Conta</label>
-            </div>
-            <div class="input-group">
                 <input type="password" id="password" name="password" required>
                 <label for="password">Senha</label>
             </div>
             <button type="submit">Cadastrar</button>
             <a href="./index.php" class="back-button">Voltar</a>
-            
-            <p class="error-message" id="errorMessage"></p>
+            <div id="errorMessage" class="input-group"></div>
+
+            <div style="display: flex;justify-content: center;" class="input-group">
+                <div class="loader" id="loader"></div> <!-- Animação de espera -->
+            </div>
         </form>
     </div>
 
-    <script src="./public/js/index.js" defer></script>
+    <script>
+        function esperar(tempo){
+            return new Promise(resolve => setTimeout(resolve, tempo))
+        }
+
+        const form = document.getElementById('registerForm')
+        form.addEventListener('submit', async(e)=>{
+            e.preventDefault()
+            const loginForm =document.getElementById('login')
+            const cpfForm =document.getElementById('cpf')
+            const emailForm =document.getElementById('email')
+            const passwordForm =document.getElementById('password')
+            const loader = document.getElementById('loader')
+            const mensagem = document.getElementById('errorMessage')
+            const data = {login: loginForm.value , cpf: cpfForm.value,
+                email: emailForm.value, senha:passwordForm.value}
+            loader.style.display = 'block'
+            const response = await fetch('./controllers/cadastroUsuarioController.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+
+            const result = await response.json();
+
+            if(result.status){
+                mensagem.style.display = 'block'
+                mensagem.style.color = 'green'
+                mensagem.textContent = result.message
+                await esperar(1700)
+                loader.style.display = 'none'
+                window.location.href = "./index.php"
+            }
+            else{
+                mensagem.style.display = 'block'
+                mensagem.style.color = 'red'
+                mensagem.textContent = result.message
+                await esperar(1200)
+                loader.style.display = 'none'
+                location.reload()
+                console.log('Erro ao processar dados')
+            }
+        })
+
+
+        function formatarCPF(cpfInput) {
+    // Remove todos os caracteres que não são dígitos
+    let cpf = cpfInput.value.replace(/\D/g, "");
+
+    // Adiciona os pontos e traço conforme o CPF é digitado
+    if (cpf.length <= 11) {
+        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");        // 123.456
+        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");        // 123.456.789
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");  // 123.456.789-01
+    }
+
+    // Atualiza o valor do input com o CPF formatado
+    cpfInput.value = cpf;
+}
+
+    </script>
 </body>
 </html>
 

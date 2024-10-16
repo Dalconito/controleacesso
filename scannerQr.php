@@ -1,3 +1,13 @@
+<?php
+session_start();
+    if(!$_SESSION){
+        header('location: ./index.php');
+    }else{
+        if($_SESSION['tipoUsr'] != 'admin'){
+            header('location: ./dashboard.php');
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

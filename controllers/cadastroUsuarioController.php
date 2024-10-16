@@ -1,26 +1,50 @@
 <?php
 require_once(__DIR__ . "/../database/database.php");
-require_once __DIR__ . "/print.php";
 
-$loginUsr = isset($_POST['login']) ? $_POST['login'] : null;
-$cpfUsr = isset($_POST['cpf']) ? $_POST['cpf'] : null;
-$emailUsr = isset($_POST['email']) ? $_POST['email'] : null;
-$tipoUsr = isset($_POST['tipo_grupo']) ? $_POST['tipo_grupo'] : null;
-$passUser = isset($_POST['password']) ? $_POST['password'] : null;
+$dataPost = json_decode(file_get_contents('php://input'), true);
 
-if($loginUsr && $cpfUsr && $emailUsr && $tipoUsr && $passUser !=null){
-    createUser($loginUsr, $cpfUsr, $emailUsr, $tipoUsr, $passUser);
+if (empty($dataPost)) {
+    enviarRespostaFront(false, 'Dados Vazios');
+} else {
+       $login = $dataPost['login'];
+       $cpf = $dataPost['cpf'];
+       $email = $dataPost['email'];
+       $senha = $dataPost['senha'];
+
+        $conn = connectDb();
+        $selectCpf = selectperso('cpf',$cpf);
+        $selectLogin = selectperso('loginusr',$login);
+        $selectEmail = selectperso('email',$email);
+
+        if($selectLogin){
+            enviarRespostaFront(false, 'Login Existente');
+            exit();
+        }else
+        if($selectCpf){
+            enviarRespostaFront(false, 'Cpf Existente');
+            exit();
+        }else
+        if($selectEmail){
+            enviarRespostaFront(false, 'Email Existente');
+            exit();
+        }else{
+            $query = "INSERT INTO usuarios (loginusr, cpf, email,tipo_conta, senha) VALUES (?,?,?,1,?);";
+            $queryCreate = $conn->prepare($query);
+            if($queryCreate === false){enviarRespostaFront(false, 'Erro ao cadastrar Usuario');}
+            $queryCreate->bind_param('ssss', $login,$cpf,$email,$senha);
+            if($queryCreate->execute()){
+                enviarRespostaFront(true, 'Usuario adicionado com Sucesso!');
+            }else {
+                $queryCreate->close(); $conn->close();
+                enviarRespostaFront(false, 'Erro ao Adicionar Usuario!');}
+        }
 }
-function createUser($login,$cpf,$email,$tipoConta,$senha ){
-    $conn = connectDb();
-    $query = "INSERT INTO usuarios (loginusr, cpf, email,tipo_conta, senha) VALUES (?,?,?,?,?);";
-    $queryCreate = $conn->prepare($query);
-    if($queryCreate === false){printErroExecute("a preparacao da query na funcao createUser" . __FILE__);}
-    $queryCreate->bind_param('sssis', $login,$cpf,$email,$tipoConta,$senha);
 
-    if($queryCreate->execute()){
-        echo "usuario criado com sucesso";
-    }else {"Erro ao Criar Usuario";}
-    $queryCreate->close(); $conn->close();
+function enviarRespostaFront($status, $mensagem){
+    header('Content-Type: application/json');
+    echo json_encode([
+        'status' => $status,
+        'message' => $mensagem
+    ]);
+    exit();
 }
-

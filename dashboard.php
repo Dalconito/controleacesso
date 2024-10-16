@@ -1,9 +1,13 @@
 <?php
 session_start();
-require_once "./controllers/dashboardController.php";
+require_once "./database/database.php";
 require_once "./controllers/verificaAPI.php";
-$loginSession = $_SESSION['login'];
-$cpfSession = $_SESSION['cpf'];
+if($_SESSION){
+    $loginSession = $_SESSION['login'];
+    $cpfSession = $_SESSION['cpf'];
+}else{
+    header('location: ./index.php');
+}
 if (isset($_POST)) {
     $selectIngressos = selectPorCpf($cpfSession);
 }

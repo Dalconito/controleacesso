@@ -19,8 +19,10 @@ $response = [];
     else {printErroExecute("Seleção");}
     $query->close(); $conn->close();
 
-    if ($resultQuery['stat'] == 0)
-    {updateQrCode($postData);}
+    if ($resultQuery['stat'] == 0){
+        updateQrCode($postData);
+        updateQtde($postData);
+    }
     else enviarResposta("001", "QrCode Já validado");
 
 function updateQrCode($postData){
@@ -35,6 +37,20 @@ function updateQrCode($postData){
     $query->close(); $conn->close();
     enviarResposta("002", "ALTERADO");
 }
+
+function updateQtde($postData){
+    $conn = connectDb();
+    $updateDbQuery = " UPDATE qrcode set qtde = qtde -1 where qrcodeid= '$postData';";
+    $uptadeQuery = mysqli_query($conn, $updateDbQuery);
+    $conn->close();
+}
+
+function Query($idQrCode)
+{$conn = connectDb();
+    $selectQuery = "SELECT qrcodeid FROM qrcode where qrcodeid = '$idQrCode'";
+    $resultQuery = mysqli_query($conn, $selectQuery);
+    $returnQuery = mysqli_fetch_assoc($resultQuery);
+    $conn->close(); return $returnQuery;}
 
 function enviarResposta($status, $message){
     header('Content-Type: application/json'); // Define o tipo de conteúdo como JSON

@@ -13,15 +13,6 @@ if(isset($_SESSION['tipoUsr'])){
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
 <body>
-    
-    <!-- Menu lateral direito -->
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-        <a href="index.php">Principal</a>
-        <a href="produtos.php">Produtos</a>
-        <a href="sobre.php">Sobre</a>
-    </div>
-
     <div class="principal">
 
         <div class="login-container">
@@ -37,7 +28,6 @@ if(isset($_SESSION['tipoUsr'])){
                 </div>
                 <div id="errorMessage" class="input-group"></div>
                 <button type="submit">Login</button>
-                <p class="error-message" id="errorMessage"></p>
                 <div class="additional-links">
                     <a href="./recuperasenha.php" id="forgotPassword">Esqueci minha senha</a>
                     <a href="./cadastroUsuario.php" id="register">Cadastre-se</a>
@@ -45,7 +35,6 @@ if(isset($_SESSION['tipoUsr'])){
                 
             </form>
             <div style="display: flex;justify-content: center;">
-                <div id="message"></div> <!-- Exibe mensagens de erro ou sucesso -->
                 <div class="loader" id="loader"></div> <!-- Animação de espera -->
             </div>
         </div>
