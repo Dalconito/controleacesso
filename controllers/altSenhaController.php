@@ -15,8 +15,6 @@ else{
     updatePassword($emailPost, $senhaPost);
 }
 
-
-
 function updatePassword($email, $novaSenha): void {
     $conn = connectDb();
 
