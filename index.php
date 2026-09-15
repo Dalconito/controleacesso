@@ -1,17 +1,19 @@
 <?php
 session_start();
-if(isset($_SESSION['tipoUsr'])){
+if (isset($_SESSION['tipoUsr'])) {
     header("location: ./dashboard.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" href="./public/css/index.css">
 </head>
+
 <body>
     <div class="principal">
 
@@ -32,7 +34,7 @@ if(isset($_SESSION['tipoUsr'])){
                     <a href="./recuperasenha.php" id="forgotPassword">Esqueci minha senha</a>
                     <a href="./cadastroUsuario.php" id="register">Cadastre-se</a>
                 </div>
-                
+
             </form>
             <div style="display: flex;justify-content: center;">
                 <div class="loader" id="loader"></div> <!-- Animação de espera -->
@@ -41,4 +43,5 @@ if(isset($_SESSION['tipoUsr'])){
     </div>
     <script src="./public/js/index.js" defer></script>
 </body>
+
 </html>

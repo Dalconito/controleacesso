@@ -1,25 +1,26 @@
 <?php
 session_start();
 require_once "./database/database.php";
-require_once "./controllers/verificaAPI.php";
-if($_SESSION){
+require_once "./controllers/CEQr.php";
+
+if ($_SESSION) {
     $loginSession = $_SESSION['login'];
     $cpfSession = $_SESSION['cpf'];
-}else{
+} else {
     header('location: ./index.php');
 }
-if (isset($_POST)) {
-    $selectIngressos = selectPorCpf($cpfSession);
-}
+$selectIngressos = buscarCodigosQr($cpfSession);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="./public/css/dashboard.css">
 </head>
+
 <body>
     <?php require_once "./templates/menu.php"; ?>
     <h1>Olá <?php echo $loginSession ?></h1>
@@ -29,30 +30,35 @@ if (isset($_POST)) {
             <th>Nome</th>
             <th>Status</th>
             <th>Quantidade</th>
-            <th>ID</th>
+            <th>QrCode</th>
             <th>Ações</th>
         </tr>
 
         <?php if (isset($selectIngressos) && !empty($selectIngressos)) {
             foreach ($selectIngressos as $ingressos) {
-                // Define a classe para o status
-                $statusClass = ($ingressos['status'] == 9) ? 'status-9' : 'status-other'; ?>
+                // Define a classe para o status 
+        ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($ingressos['nome']); ?></td>
-                    <td class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($ingressos['status']); ?></td>
-                    <td><?php echo htmlspecialchars($ingressos['qtde']); ?></td>
-                    <td><?php echo htmlspecialchars($ingressos['ingresso']); ?></td>
+                    <td><?php echo htmlspecialchars($ingressos->getIdIngresso()); ?></td>
+                    <td class="status"><?php echo htmlspecialchars($ingressos->getStatus()); ?></td>
+                    <td><?php echo htmlspecialchars($ingressos->getQtde()); ?></td>
                     <td>
-                        <button onclick="exibindo(this, '<?php echo $cpfSession; ?>', '<?php echo $ingressos['ingresso']; ?>')">Exibir QrCode</button>
+                        <div
+                            class="qrcode"
+                            data-codigo="<?= htmlspecialchars($ingressos->getIdIngresso()) ?>"></div>
                     </td>
+                    <td></td>
                 </tr>
-        <?php } } else { ?>
+            <?php }
+        } else { ?>
             <tr>
                 <td colspan="4">Nenhum dado a ser mostrado</td>
             </tr>
         <?php } ?>
     </table>
     <div id="resultado"></div>
-    <script src="./public/js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="./public/js/dashboard.js"></script>
 </body>
+
 </html>

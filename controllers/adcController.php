@@ -1,32 +1,72 @@
 <?php
+
 session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $dataPost = json_decode(file_get_contents('php://input'), true);
-    if(isset($dataPost)){
 
-        $nomePost = $dataPost['nome'];
-        $emailPost = $dataPost['email'];
-    }
-        // Processa os dados normalmente
-        $response = [
-            'status' => 'success',
-            'message' => 'Dados recebidos com sucesso',
-            'nome' => $nome,
-            'email' => $email
-        ];
-        header('Content-Type: application/json');
-        http_response_code(200);
-        echo json_encode($response);
-        session_destroy(); session_unset();
-    } else {
-        // Dados incompletos
-        $response = [
-            'status' => 'error',
-            'message' => 'Dados incompletos'
-        ];
+header('Content-Type: application/json');
 
-        header('Content-Type: application/json');
-        http_response_code(400);
-        echo json_encode($response);
-    }
+require_once __DIR__ . '/../entidades/CodigoQr.php';
+require_once __DIR__ . '/CEQr.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Método não permitido'
+    ]);
+
+    exit;
+}
+
+$nome = $_POST['nomeC'] ?? null;
+$cpf = $_POST['cpf'] ?? null;
+$idIngresso = $_POST['idIngresso'] ?? null;
+$idEvento = $_POST['idEvento'] ?? null;
+$quantidade = $_POST['quantidade'] ?? null;
+
+if (!$nome || !$cpf || !$idIngresso || !$idEvento || !$quantidade) {
+    http_response_code(400);
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Dados incompletos'
+    ]);
+
+    exit;
+}
+
+try {
+
+    $codigoQr = new CodigoQr(
+        $nome,
+        $cpf,
+        $idEvento,
+        (int) $quantidade
+    );
+
+    createQrCode($codigoQr);
+
+    http_response_code(200);
+
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'QR Code criado com sucesso'
+    ]);
+} catch (InvalidArgumentException $e) {
+
+    http_response_code(400);
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => $e->getMessage()
+    ]);
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine()
+    ]);
+}

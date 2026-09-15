@@ -1,51 +1,115 @@
 <?php
-require_once __DIR__ . "/verificaAPI.php";
-require_once __DIR__ . "/../database/database.php";
-include_once __DIR__."/../phpqrcode-master/qrlib.php";
-$dataPost = json_decode(file_get_contents("php://input"), true);
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+
+    echo json_encode([
+        'status' => false,
+        'message' => 'Método não permitido'
+    ]);
+
+    exit;
+}
 
 header('Content-Type: application/json');
 
-if (empty($dataPost)){
-    echo json_encode([
-        'status' => false,
-        'message' => "Erro ao receber dados"
-    ]);
-}
-else{
-    $cpfPost = $dataPost['cpfPost'];
-    $ingressoPost = $dataPost['ingressoPost'];
-    $secretKey = "fabricad";
-    
-    $string =  $ingressoPost . $cpfPost;
-    $criptografado = hash_hmac("sha256", $string, $secretKey);
-    if($criptografado != null) {
-        $selecaoQr = select($criptografado);
-        if($selecaoQr){
-            $selecaoQrId = $selecaoQr['qrcodeid'];
-            ob_start();
-            QRcode::png($selecaoQrId, null, QR_ECLEVEL_L, 10);
-            $imageString = base64_encode(ob_get_contents());
-            ob_end_clean();
-    
-            // Retorna o QR Code em formato base64 como JSON
-            echo json_encode([
-                'status' => true,
-                'qrcode' => true,
-                'qrCodeImage' => $imageString
-            ]);
-            exit();
-        }
-        else{
-        verificarIntegridade($cpfPost, $criptografado, $ingressoPost);
-        }
+require_once __DIR__ . '/../entidades/CodigoQr.php';
+require_once __DIR__ . '/CEQr.php';
+require_once __DIR__ . '/../phpqrcode-master/qrlib.php';
+
+try {
+
+    $dataPost = json_decode(
+        file_get_contents('php://input'),
+        true
+    );
+
+    if (!is_array($dataPost)) {
+        http_response_code(400);
+
+        echo json_encode([
+            'status' => false,
+            'message' => 'Dados inválidos'
+        ]);
+
+        exit;
     }
-    
+
+    $cpf = $dataPost['cpfPost'] ?? null;
+
+    if (!$cpf) {
+        http_response_code(400);
+
+        echo json_encode([
+            'status' => false,
+            'message' => 'CPF não informado'
+        ]);
+
+        exit;
+    }
+
+    $codigosQr = buscarCodigosQr($cpf);
+
+    if (empty($codigosQr)) {
+        http_response_code(404);
+
+        echo json_encode([
+            'status' => false,
+            'message' => 'Nenhum QR Code encontrado para este CPF',
+            'codigosQr' => []
+        ]);
+
+        exit;
+    }
+
+    $resultado = [];
+
+    foreach ($codigosQr as $codigoQr) {
+
+        ob_start();
+
+        QRcode::png(
+            $codigoQr->getId(),
+            null,
+            QR_ECLEVEL_L,
+            10
+        );
+
+        $imageString = base64_encode(
+            ob_get_clean()
+        );
+
+        $resultado[] = [
+            'id' => $codigoQr->getId(),
+            'cpf' => $codigoQr->getCpf(),
+            'idIngresso' => $codigoQr->getIdIngresso(),
+            'idEvento' => $codigoQr->getIdEvento(),
+            'quantidade' => $codigoQr->getQtde(),
+            'qrCodeImage' => $imageString
+        ];
+    }
+
     echo json_encode([
         'status' => true,
-        'message' => 'Sucesso, dados em json',
-        'cpf' => $cpfPost,
-        'ingresso' => $ingressoPost
+        'message' => 'QR Codes encontrados',
+        'codigosQr' => $resultado
     ]);
-    exit();
+} catch (PDOException $e) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        'status' => false,
+        'message' => 'Erro ao consultar banco de dados',
+        'error' => $e->getMessage()
+    ]);
+} catch (Throwable $e) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        'status' => false,
+        'message' => 'Erro interno',
+        'error' => $e->getMessage()
+    ]);
 }
