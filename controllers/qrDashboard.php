@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../entidades/CodigoQr.php';
+require_once __DIR__ . '/../entidades/Ingresso.php';
 require_once __DIR__ . '/CEQr.php';
 require_once __DIR__ . '/../phpqrcode-master/qrlib.php';
 
@@ -64,12 +64,12 @@ try {
 
     $resultado = [];
 
-    foreach ($codigosQr as $codigoQr) {
+    foreach ($codigosQr as $Ingresso) {
 
         ob_start();
 
         QRcode::png(
-            $codigoQr->getId(),
+            $Ingresso->getId(),
             null,
             QR_ECLEVEL_L,
             10
@@ -80,11 +80,11 @@ try {
         );
 
         $resultado[] = [
-            'id' => $codigoQr->getId(),
-            'cpf' => $codigoQr->getCpf(),
-            'idIngresso' => $codigoQr->getIdIngresso(),
-            'idEvento' => $codigoQr->getIdEvento(),
-            'quantidade' => $codigoQr->getQtde(),
+            'id' => $Ingresso->getId(),
+            'cpf' => $Ingresso->getCpf(),
+            'idIngresso' => $Ingresso->getIdIngresso(),
+            'idEvento' => $Ingresso->getIdEvento(),
+            'quantidade' => $Ingresso->getQtde(),
             'qrCodeImage' => $imageString
         ];
     }

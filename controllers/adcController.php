@@ -4,7 +4,7 @@ session_start();
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../entidades/CodigoQr.php';
+require_once __DIR__ . '/../entidades/Ingresso.php';
 require_once __DIR__ . '/CEQr.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -37,14 +37,14 @@ if (!$nome || !$cpf || !$idIngresso || !$idEvento || !$quantidade) {
 
 try {
 
-    $codigoQr = new CodigoQr(
+    $ingresso = new Ingresso(
         $nome,
         $cpf,
         $idEvento,
         (int) $quantidade
     );
 
-    createQrCode($codigoQr);
+    createQrCode($ingresso);
 
     http_response_code(200);
 

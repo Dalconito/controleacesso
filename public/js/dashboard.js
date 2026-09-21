@@ -8,24 +8,47 @@ document.querySelectorAll("td.status").forEach(function (cell) {
       break;
     case 2:
       cell.style.backgroundColor = "#07da38";
+      cell.textContent = "Utilizado";
       break;
-    case 1:
+    case 3:
       cell.style.backgroundColor = "#ff0303";
       break;
   }
 });
 
+document.querySelectorAll(".nomeEvento").forEach(function (elemento) {
+  const dataEvento = elemento.dataset.dataEvento;
+  const dataEventoFim = elemento.dataset.dataEventoFim;
+
+  const agora = new Date();
+  const evento = new Date(dataEvento.replace(" ", "T"));
+  const eventoFim = new Date(dataEventoFim.replace(" ", "T"));
+
+  switch (true) {
+    case agora < evento:
+      // Antes do evento
+      elemento.style.backgroundColor = "#02a328";
+      break;
+
+    case agora >= evento && agora <= eventoFim:
+      // Durante o evento
+      elemento.style.backgroundColor = "#0084ff";
+      break;
+
+    case agora > eventoFim:
+      // Depois do evento
+      elemento.style.backgroundColor = "#ff0303";
+      break;
+  }
+});
+
 document.querySelectorAll(".qrcode").forEach(function (element) {
-  const elementos = document.querySelectorAll(".qrcode");
+  const codigo = element.dataset.codigo;
 
-  elementos.forEach(function (element) {
-    const codigo = element.dataset.codigo;
-
-    new QRCode(element, {
-      text: codigo,
-      width: 150,
-      height: 150,
-    });
+  new QRCode(element, {
+    text: codigo,
+    width: 150,
+    height: 150,
   });
 });
 

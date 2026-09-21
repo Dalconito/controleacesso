@@ -1,39 +1,38 @@
 <?php
 require_once(__DIR__ . "/../database/database.php");
 require_once __DIR__ . "/print.php";
-require_once __DIR__ . "/../entidades/CodigoQr.php";
+require_once __DIR__ . "/../entidades/Ingresso.php";
 
-function createQrCode(CodigoQr $codigoQR)
+function createQrCode(Ingresso $ingresso)
 {
     $conn = connectDb();
 
     $sql = "
-        INSERT INTO qrcode
-        (stat, id_ingresso, cpf, qtde, evento_id)
+        INSERT INTO ingresso
+        (id_ingresso, cpf, qtde, evento_id)
         VALUES
-        (:stat, :id_ingresso, :cpf, :qtde, :evento_id)
-        RETURNING qrcodeid
+        (:id_ingresso, :cpf, :qtde, :evento_id)
+        RETURNING id
         ";
 
     $query = $conn->prepare($sql);
 
     $query->execute([
-        ':stat' => '0',
-        ':id_ingresso' => $codigoQR->getIdIngresso(),
-        ':cpf' => $codigoQR->getCpf(),
-        ':qtde' => $codigoQR->getQtde(),
-        ':evento_id' => $codigoQR->getIdEvento()
+        ':id_ingresso' => $ingresso->getIdIngresso(),
+        ':cpf' => $ingresso->getCpf(),
+        ':qtde' => $ingresso->getQtde(),
+        ':evento_id' => $ingresso->getIdEvento()
     ]);
 
-    $id = $query->fetchColumn();
+    $id = $query->fetchColumn() ;
 
-    $codigoQR->setId($id);
+    $ingresso->setId($id);
 
-    return $codigoQR;
+    return $ingresso;
 }
 
 /**
- * @return CodigoQr[]
+ * @return Ingresso[]
  */
 function buscarCodigosQr(string $cpf): array
 {
@@ -41,15 +40,15 @@ function buscarCodigosQr(string $cpf): array
 
     $sql = "
         SELECT
-            qrcodeid,
+            id,
             cpf,
             id_ingresso,
             qtde,
             evento_id,
             status
-        FROM qrcode
+        FROM ingresso
         WHERE cpf = :cpf
-        ORDER BY qrcodeid
+        ORDER BY updated
     ";
 
     $query = $conn->prepare($sql);
@@ -61,13 +60,13 @@ function buscarCodigosQr(string $cpf): array
     $codigosQr = [];
 
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        $codigosQr[] = CodigoQr::fromDatabase(
-            $row['qrcodeid'],
+        $codigosQr[] = Ingresso::fromDatabase(
+            $row['id'],
             $row['cpf'],
             $row['id_ingresso'],
             $row['evento_id'],
-            $row['status'],
-            (int) $row['qtde']
+            (int) $row['qtde'],
+            $row['status']
         );
     }
 

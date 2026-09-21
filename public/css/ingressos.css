@@ -1,0 +1,214 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f6f8;
+  color: #222;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* Cabeçalho */
+
+.cabecalho {
+  margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 5px;
+  font-size: 28px;
+}
+
+.cabecalho p {
+  margin: 0;
+  color: #777;
+}
+
+/* Filtro */
+
+.filtro {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filtro label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.filtro form {
+  width: 100%;
+}
+
+.filtro select {
+  width: 100%;
+  max-width: 600px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  background: white;
+  font-size: 15px;
+}
+
+/* Evento */
+
+.eventoSelecionado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 10px;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.eventoSelecionado h2 {
+  margin: 5px 0 0;
+  font-size: 22px;
+}
+
+.label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.eventoData {
+  color: #555;
+}
+
+/* Tabela */
+
+.tabelaContainer {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  background: #f8f8f8;
+  padding: 15px;
+  font-size: 13px;
+  color: #555;
+}
+
+td {
+  padding: 15px;
+  border-top: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Status */
+
+.status {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  background: #eee;
+}
+
+/* Botões */
+
+button {
+  border: none;
+  border-radius: 6px;
+
+  padding: 9px 13px;
+
+  cursor: pointer;
+
+  background: #333;
+  color: white;
+
+  font-size: 13px;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+.btnQrCode {
+  background: #444;
+}
+
+/* QR Code */
+
+.linhaQrCode {
+  display: none;
+}
+
+.linhaQrCode.visivel {
+  display: table-row;
+}
+
+.qrCodeContainer {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 25px;
+
+  background: #fafafa;
+}
+
+.qrcode {
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+}
+
+/* Sem dados */
+
+.semIngressos,
+.selecioneEvento {
+  background: white;
+
+  padding: 50px;
+
+  text-align: center;
+
+  border-radius: 10px;
+
+  color: #777;
+}
+
+.selecioneEvento h2 {
+  color: #333;
+}
