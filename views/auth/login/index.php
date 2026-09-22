@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (isset($_SESSION['tipoUsr'])) {
-    header("location: ./dashboard.php");
+if (!isset($_SESSION['tipoUsr'])) {
+    header("location: ./dashboard");
 }
 ?>
 <!DOCTYPE html>

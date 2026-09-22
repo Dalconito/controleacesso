@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------
 
     try {
-      const response = await fetch("./controllers/adicionarEvento.php", {
+      const response = await fetch("./api/v1/eventos/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

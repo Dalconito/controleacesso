@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="./public/css/cadastroUsuario.css">
 </head>
+
 <body>
     <div class="form-container">
         <form id="registerForm" method="post">
@@ -37,39 +39,44 @@
     </div>
 
     <script>
-        function esperar(tempo){
+        function esperar(tempo) {
             return new Promise(resolve => setTimeout(resolve, tempo))
         }
 
         const form = document.getElementById('registerForm')
-        form.addEventListener('submit', async(e)=>{
+        form.addEventListener('submit', async (e) => {
             e.preventDefault()
-            const loginForm =document.getElementById('login')
-            const cpfForm =document.getElementById('cpf')
-            const emailForm =document.getElementById('email')
-            const passwordForm =document.getElementById('password')
+            const loginForm = document.getElementById('login')
+            const cpfForm = document.getElementById('cpf')
+            const emailForm = document.getElementById('email')
+            const passwordForm = document.getElementById('password')
             const loader = document.getElementById('loader')
             const mensagem = document.getElementById('errorMessage')
-            const data = {login: loginForm.value , cpf: cpfForm.value,
-                email: emailForm.value, senha:passwordForm.value}
+            const data = {
+                login: loginForm.value,
+                cpf: cpfForm.value,
+                email: emailForm.value,
+                senha: passwordForm.value
+            }
             loader.style.display = 'block'
-            const response = await fetch('./controllers/cadastroUsuarioController.php', {
+            const response = await fetch('./api/v1/auth/signup', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(data)
             })
 
             const result = await response.json();
 
-            if(result.status){
+            if (result.status) {
                 mensagem.style.display = 'block'
                 mensagem.style.color = 'green'
                 mensagem.textContent = result.message
                 await esperar(1700)
                 loader.style.display = 'none'
                 window.location.href = "./index.php"
-            }
-            else{
+            } else {
                 mensagem.style.display = 'block'
                 mensagem.style.color = 'red'
                 mensagem.textContent = result.message
@@ -82,21 +89,20 @@
 
 
         function formatarCPF(cpfInput) {
-    // Remove todos os caracteres que não são dígitos
-    let cpf = cpfInput.value.replace(/\D/g, "");
+            // Remove todos os caracteres que não são dígitos
+            let cpf = cpfInput.value.replace(/\D/g, "");
 
-    // Adiciona os pontos e traço conforme o CPF é digitado
-    if (cpf.length <= 11) {
-        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");        // 123.456
-        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");        // 123.456.789
-        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");  // 123.456.789-01
-    }
+            // Adiciona os pontos e traço conforme o CPF é digitado
+            if (cpf.length <= 11) {
+                cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); // 123.456
+                cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); // 123.456.789
+                cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // 123.456.789-01
+            }
 
-    // Atualiza o valor do input com o CPF formatado
-    cpfInput.value = cpf;
-}
-
+            // Atualiza o valor do input com o CPF formatado
+            cpfInput.value = cpf;
+        }
     </script>
 </body>
-</html>
 
+</html>

@@ -55,7 +55,7 @@ document.querySelectorAll(".qrcode").forEach(function (element) {
 async function logout() {
   const data = { data: "logout" };
   try {
-    const response = await fetch("./controllers/logoutController.php", {
+    const response = await fetch("./api/v1/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/application/json", // Formato tradicional de formulário

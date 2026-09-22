@@ -4,7 +4,7 @@ data.append("email", "johndoe@example.com");
 
 async function logout() {
   try {
-    const response = await fetch("./controllers/adcController.php", {
+    const response = await fetch("./api/v1/auth/logout.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded", // Formato tradicional de formulário
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("./controllers/adcController.php", {
+      const response = await fetch("./api/v1/ingressos/create", {
         method: "POST",
         body: formData,
       });

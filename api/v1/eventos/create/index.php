@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . "/../entidades/Evento.php";
-require_once __DIR__ . "/../database/eventos.php";
+require_once __DIR__ . "/../../../entidades/Evento.php";
+require_once __DIR__ . "/../../../database/eventos.php";
 
 header('Content-Type: application/json; charset=utf-8');
 
